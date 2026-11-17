@@ -1,0 +1,3285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knowledge Quest – Hành Trình Khám Phá Tri Thức</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Baloo 2"', 'cursive', 'sans-serif'],
+            body: ['"Be Vietnam Pro"', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; user-select: none; }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: linear-gradient(180deg, #BAE6FD 0%, #E0F2FE 55%, #DCFCE7 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #1E293B;
+    }
+    h1, h2, h3, h4, .font-game { font-family: 'Baloo 2', cursive, sans-serif; }
+
+    .btn-game {
+      font-family: 'Baloo 2', cursive, sans-serif;
+      font-weight: 700;
+      transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease, filter 0.14s ease;
+      position: relative;
+      cursor: pointer;
+    }
+    .btn-game:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.04); }
+    .btn-game:active:not(:disabled) { transform: translateY(3px); }
+    .btn-game:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .btn-yellow {
+      background: linear-gradient(180deg, #FDE047 0%, #FACC15 55%, #F59E0B 100%);
+      color: #422006;
+      box-shadow: 0 5px 0 #B45309, 0 10px 20px rgba(245, 158, 11, 0.35);
+      border: 2px solid #FEF08A;
+    }
+    .btn-yellow:active:not(:disabled) { box-shadow: 0 2px 0 #B45309; }
+
+    .btn-purple {
+      background: linear-gradient(180deg, #8B5CF6 0%, #7C3AED 60%, #6D28D9 100%);
+      color: #FFFFFF;
+      box-shadow: 0 5px 0 #4C1D95, 0 10px 20px rgba(124, 58, 237, 0.3);
+      border: 2px solid #C4B5FD;
+    }
+    .btn-purple:active:not(:disabled) { box-shadow: 0 2px 0 #4C1D95; }
+
+    .btn-sky {
+      background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%);
+      color: #FFFFFF;
+      box-shadow: 0 5px 0 #075985, 0 8px 16px rgba(2, 132, 199, 0.3);
+      border: 2px solid #BAE6FD;
+    }
+    .btn-sky:active:not(:disabled) { box-shadow: 0 2px 0 #075985; }
+
+    .btn-emerald {
+      background: linear-gradient(180deg, #34D399 0%, #059669 100%);
+      color: #FFFFFF;
+      box-shadow: 0 5px 0 #065F46, 0 8px 16px rgba(5, 150, 105, 0.3);
+      border: 2px solid #A7F3D0;
+    }
+    .btn-emerald:active:not(:disabled) { box-shadow: 0 2px 0 #065F46; }
+
+    .btn-white {
+      background: #FFFFFF;
+      color: #334155;
+      box-shadow: 0 4px 0 #CBD5E1, 0 6px 15px rgba(15, 23, 42, 0.08);
+      border: 2px solid #E2E8F0;
+    }
+    .btn-white:active:not(:disabled) { box-shadow: 0 1px 0 #CBD5E1; }
+
+    @keyframes floatCloudSlow { 0% { transform: translateX(-140px); } 100% { transform: translateX(110vw); } }
+    @keyframes floatCloudReverse { 0% { transform: translateX(110vw); } 100% { transform: translateX(-150px); } }
+    .cloud-drift-1 { animation: floatCloudSlow 46s linear infinite; }
+    .cloud-drift-2 { animation: floatCloudSlow 62s linear infinite; animation-delay: -20s; }
+    .cloud-drift-3 { animation: floatCloudReverse 54s linear infinite; animation-delay: -12s; }
+
+    @keyframes owlIdle { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-6px) rotate(1.5deg); } }
+    @keyframes owlHappy {
+      0%, 100% { transform: translateY(0) scale(1); }
+      25% { transform: translateY(-16px) scale(1.08) rotate(-5deg); }
+      50% { transform: translateY(0) scale(0.96); }
+      75% { transform: translateY(-10px) scale(1.05) rotate(5deg); }
+    }
+    @keyframes owlSad {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      25% { transform: translateX(-6px) rotate(-6deg); }
+      50% { transform: translateX(6px) rotate(6deg); }
+      75% { transform: translateX(-4px) rotate(-3deg); }
+    }
+    .owl-idle { animation: owlIdle 3s ease-in-out infinite; }
+    .owl-happy { animation: owlHappy 0.8s ease-in-out 2; }
+    .owl-sad { animation: owlSad 0.6s ease-in-out 2; }
+
+    @keyframes pulseStage {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.75), 0 8px 0 #4C1D95; }
+      50% { transform: scale(1.035); box-shadow: 0 0 0 12px rgba(250, 204, 21, 0), 0 10px 0 #4C1D95; }
+    }
+    .stage-active-pulse { animation: pulseStage 2s infinite; }
+
+    @keyframes floatPenalty {
+      0% { opacity: 1; transform: translateY(0) scale(0.8); }
+      40% { opacity: 1; transform: translateY(-28px) scale(1.25); }
+      100% { opacity: 0; transform: translateY(-55px) scale(1); }
+    }
+    .penalty-pop { animation: floatPenalty 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+    @keyframes floatScore {
+      0% { opacity: 1; transform: translateY(0) scale(0.8); }
+      50% { opacity: 1; transform: translateY(-25px) scale(1.2); }
+      100% { opacity: 0; transform: translateY(-50px) scale(1); }
+    }
+    .score-pop { animation: floatScore 0.9s ease-out forwards; }
+
+    .screen-fade-in { animation: fadeInScale 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .memory-card {
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .memory-card:hover:not(.matched) { transform: translateY(-2px) scale(1.02); }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #E0F2FE; }
+    ::-webkit-scrollbar-thumb { background: #7C3AED; border-radius: 999px; }
+  </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between">
+
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute top-6 right-8 w-20 h-20 md:w-28 md:h-28 rounded-full bg-yellow-300 opacity-90 shadow-[0_0_50px_18px_rgba(253,224,71,0.65)]"></div>
+    <svg class="cloud-drift-1 absolute top-10 left-0 w-36 md:w-48 opacity-90" viewBox="0 0 200 80" fill="none">
+      <path d="M45 65H155C171.569 65 185 51.5685 185 35C185 19.6558 173.481 7.00338 158.618 5.20729C152.356 -1.65314 142.369 -2.86327 134.5 2.5C125.915 -5.2392 112.585 -5.2392 104 2.5C94.287 -4.64234 80.587 -3.2856 72.5 5.5C56.835 6.45392 44.5 19.4426 44.5 35.3C44.5 36.2248 44.542 37.1398 44.624 38.0431C30.896 40.3204 20.5 52.2383 20.5 66.5H45V65Z" fill="white"/>
+    </svg>
+    <svg class="cloud-drift-2 absolute top-28 left-0 w-28 md:w-40 opacity-80" viewBox="0 0 200 80" fill="none">
+      <path d="M45 65H155C171.569 65 185 51.5685 185 35C185 19.6558 173.481 7.00338 158.618 5.20729C152.356 -1.65314 142.369 -2.86327 134.5 2.5C125.915 -5.2392 112.585 -5.2392 104 2.5C94.287 -4.64234 80.587 -3.2856 72.5 5.5C56.835 6.45392 44.5 19.4426 44.5 35.3C44.5 36.2248 44.542 37.1398 44.624 38.0431C30.896 40.3204 20.5 52.2383 20.5 66.5H45V65Z" fill="white"/>
+    </svg>
+    <svg class="cloud-drift-3 absolute top-16 left-0 w-32 md:w-44 opacity-85" viewBox="0 0 200 80" fill="none">
+      <path d="M45 65H155C171.569 65 185 51.5685 185 35C185 19.6558 173.481 7.00338 158.618 5.20729C152.356 -1.65314 142.369 -2.86327 134.5 2.5C125.915 -5.2392 112.585 -5.2392 104 2.5C94.287 -4.64234 80.587 -3.2856 72.5 5.5C56.835 6.45392 44.5 19.4426 44.5 35.3C44.5 36.2248 44.542 37.1398 44.624 38.0431C30.896 40.3204 20.5 52.2383 20.5 66.5H45V65Z" fill="white"/>
+    </svg>
+    <svg class="absolute bottom-0 left-0 w-full h-44 md:h-64" preserveAspectRatio="none" viewBox="0 0 1440 320">
+      <path fill="#86EFAC" fill-opacity="0.7" d="M0,192L80,186.7C160,181,320,171,480,181.3C640,192,800,224,960,218.7C1120,213,1280,171,1360,149.3L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+      <path fill="#4ADE80" fill-opacity="0.85" d="M0,224L60,234.7C120,245,240,267,360,256C480,245,600,203,720,197.3C840,192,960,224,1080,234.7C1200,245,1320,235,1380,229.3L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+      <path fill="#22C55E" d="M0,265L120,272C240,279,480,293,720,282.7C960,272,1200,237,1320,220L1440,203L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+    </svg>
+  </div>
+
+  <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+  <div class="fixed bottom-4 left-4 z-40 flex items-center gap-2">
+    <button onclick="toggleBgm()" title="Bật/Tắt nhạc nền phiêu lưu"
+      class="w-11 h-11 rounded-full bg-white/95 hover:bg-purple-50 text-purple-700 shadow-lg border-2 border-purple-200 flex items-center justify-center transition transform hover:scale-105">
+      <span id="bgm-icon-global" class="text-xl">🎵</span>
+    </button>
+    <button onclick="toggleSound()" title="Bật/Tắt âm thanh hiệu ứng"
+      class="w-11 h-11 rounded-full bg-white/95 hover:bg-sky-50 text-sky-600 shadow-lg border-2 border-sky-200 flex items-center justify-center transition transform hover:scale-105">
+      <span id="sound-icon-global" class="text-xl">🔊</span>
+    </button>
+  </div>
+
+  <div id="toast-banner" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none hidden">
+    <div id="toast-content" class="bg-slate-900/95 text-white px-5 py-2.5 rounded-2xl shadow-2xl border-2 border-amber-300 font-game font-bold text-sm md:text-base flex items-center gap-2 screen-fade-in">
+    </div>
+  </div>
+
+  <main id="app-root" class="relative z-10 w-full flex-1 flex flex-col items-center justify-center px-3 py-4 md:px-6 md:py-5">
+  </main>
+
+  <div id="reset-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-4 border-purple-200 shadow-2xl text-center screen-fade-in">
+      <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-3xl">⚠️</div>
+      <h3 class="text-2xl font-extrabold text-slate-800 mb-2">Đặt lại toàn bộ hành trình?</h3>
+      <p class="text-slate-600 text-sm md:text-base mb-6">
+        Toàn bộ điểm số (6 chặng), ngôi sao, Xu, vật phẩm trợ giúp, trang phục Chú Cú, kỷ lục Đua thời gian và 8 huy hiệu sẽ đặt lại về ban đầu.
+      </p>
+      <div class="flex gap-3 justify-center">
+        <button onclick="closeResetModal()" class="btn-game btn-white px-5 py-2.5 rounded-2xl text-base flex-1">Hủy bỏ</button>
+        <button onclick="confirmResetProgress()" class="btn-game bg-rose-500 hover:bg-rose-600 text-white shadow-[0_4px_0_#9F1239] border-2 border-rose-300 px-5 py-2.5 rounded-2xl text-base flex-1">Đồng ý xóa</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="badges-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-3 md:p-6 overflow-y-auto">
+    <div class="bg-gradient-to-b from-sky-50 to-white rounded-3xl max-w-4xl w-full p-5 md:p-7 border-4 border-amber-300 shadow-2xl relative my-auto screen-fade-in">
+      <button onclick="closeBadgesModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 font-bold text-xl flex items-center justify-center transition">✕</button>
+      <div class="text-center mb-4">
+        <span class="inline-block px-4 py-1 rounded-full bg-amber-100 text-amber-800 font-bold text-xs md:text-sm uppercase tracking-wider mb-1">
+          Danh hiệu nhà thám hiểm • Nhận thêm Xu khi mở khóa thành tựu
+        </span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-purple-700">🏆 Bộ Sưu Tập 8 Huy Hiệu & Thưởng Thành Tựu</h2>
+      </div>
+      <div id="badges-summary-stats" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 md:gap-3 mb-4"></div>
+      <div id="badges-claim-all-bar" class="mb-4"></div>
+      <div id="badges-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-h-[52vh] overflow-y-auto pr-1"></div>
+      <div class="mt-5 text-center">
+        <button onclick="closeBadgesModal()" class="btn-game btn-purple px-8 py-2.5 rounded-2xl text-lg">Đóng túi huy hiệu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="shop-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/65 backdrop-blur-sm p-2.5 md:p-5 overflow-y-auto">
+    <div class="bg-gradient-to-b from-amber-50 via-white to-sky-50 rounded-[2rem] max-w-4xl w-full p-4 md:p-6 border-4 border-amber-400 shadow-2xl relative my-auto screen-fade-in">
+
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b-2 border-amber-200 pr-11">
+        <div class="flex items-center gap-2.5">
+          <span class="text-3xl">🎪</span>
+          <div>
+            <h2 class="text-xl md:text-2xl font-extrabold text-purple-800 leading-tight">Cửa Hàng Xu & Khu Mini-Game</h2>
+            <p class="text-xs text-slate-500">Dùng Xu mua trợ giúp, trang phục Chú Cú hoặc chơi Mini-Game kiếm thêm Xu!</p>
+          </div>
+        </div>
+        <div class="bg-yellow-100 border-2 border-yellow-400 px-3.5 py-1.5 rounded-2xl flex items-center gap-1.5 shadow-sm">
+          <span class="text-lg">🪙</span>
+          <span id="shop-coin-balance" class="font-game font-extrabold text-amber-800 text-base md:text-lg">0 Xu</span>
+        </div>
+        <button onclick="closeShopModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 font-bold text-xl flex items-center justify-center transition">✕</button>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 mb-4 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+        <button id="shop-tab-btn-powerups" onclick="switchShopTab('powerups')"
+          class="font-game font-bold text-xs sm:text-sm md:text-base py-2 px-2 rounded-xl transition flex items-center justify-center gap-1.5">
+          <span>🎒</span><span>Trợ Giúp Học Tập</span>
+        </button>
+        <button id="shop-tab-btn-wardrobe" onclick="switchShopTab('wardrobe')"
+          class="font-game font-bold text-xs sm:text-sm md:text-base py-2 px-2 rounded-xl transition flex items-center justify-center gap-1.5">
+          <span>🦉</span><span>Tủ Đồ Chú Cú</span>
+        </button>
+        <button id="shop-tab-btn-minigames" onclick="switchShopTab('minigames')"
+          class="font-game font-bold text-xs sm:text-sm md:text-base py-2 px-2 rounded-xl transition flex items-center justify-center gap-1.5">
+          <span>🎮</span><span>Mini-Game Trí Tuệ</span>
+        </button>
+      </div>
+
+      <div id="shop-tab-content" class="max-h-[64vh] overflow-y-auto pr-1"></div>
+    </div>
+  </div>
+
+  <div id="wheel-quiz-modal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/75 backdrop-blur-sm p-4">
+    <div id="wheel-quiz-box" class="bg-white rounded-3xl max-w-lg w-full p-6 border-4 border-amber-400 shadow-2xl screen-fade-in">
+    </div>
+  </div>
+
+  <script>
+
+    const STAGES_DATA = [
+      {
+        id: 1,
+        title: "Thế giới công nghệ",
+        subtitle: "Phần cứng, hệ điều hành & đơn vị dữ liệu",
+        icon: "💻",
+        badge: {
+          id: "badge_stage_1",
+          name: "Chuyên gia Phần cứng",
+          icon: "🖥️",
+          color: "from-sky-400 to-blue-600",
+          coinReward: 30,
+          condition: "Đạt 3 sao (8/8 câu đúng) ở Chặng 1: Thế giới công nghệ"
+        },
+        questions: [
+          {
+            q: "Thành phần nào được ví như 'bộ não' của máy tính, chịu trách nhiệm xử lý mọi lệnh tính toán?",
+            options: ["RAM (Bộ nhớ truy cập ngẫu nhiên)", "CPU (Bộ xử lý trung tâm)", "Ổ cứng SSD", "Card màn hình (GPU)"],
+            answer: 1,
+            hint: "Tên viết tắt gồm 3 chữ cái tiếng Anh của Central Processing Unit.",
+            explanation: "CPU (Central Processing Unit) là bộ xử lý trung tâm, đóng vai trò 'bộ não' tiếp nhận, giải mã và thực thi các lệnh của chương trình."
+          },
+          {
+            q: "Đơn vị đo lường thông tin nhỏ nhất trong máy tính là gì?",
+            options: ["Byte", "Bit", "Kilobyte (KB)", "Megabyte (MB)"],
+            answer: 1,
+            hint: "Đơn vị này chỉ mang giá trị nhị phân 0 hoặc 1, và 8 đơn vị này mới tạo thành 1 Byte.",
+            explanation: "Bit (Binary Digit) là đơn vị nhỏ nhất, chỉ nhận một trong hai giá trị 0 hoặc 1. 8 Bit ghép lại thành 1 Byte."
+          },
+          {
+            q: "Loại bộ nhớ nào sẽ bị mất toàn bộ dữ liệu đang lưu trữ khi máy tính bị tắt nguồn đột ngột?",
+            options: ["Ổ cứng HDD", "USB Flash", "RAM", "Ổ đĩa cứng SSD"],
+            answer: 2,
+            hint: "Đây là bộ nhớ tạm thời (bộ nhớ khả biến) dùng để chạy các ứng dụng đang mở.",
+            explanation: "RAM là bộ nhớ khả biến (volatile), chỉ lưu trữ tạm thời các chương trình đang chạy và sẽ xóa sạch dữ liệu khi ngắt điện."
+          },
+          {
+            q: "Phần mềm nào sau đây là Hệ điều hành (Operating System)?",
+            options: ["Microsoft Word", "Google Chrome", "Windows 11", "Adobe Photoshop"],
+            answer: 2,
+            hint: "Nền tảng hệ thống do Microsoft phát triển giúp quản lý toàn bộ phần cứng và ứng dụng.",
+            explanation: "Windows 11 (cùng với macOS, Linux, Android, iOS) là hệ điều hành quản lý phần cứng và cung cấp nền tảng cho phần mềm ứng dụng."
+          },
+          {
+            q: "1 Gigabyte (GB) theo chuẩn nhị phân trong tin học tương đương với bao nhiêu Megabyte (MB)?",
+            options: ["100 MB", "512 MB", "1000 MB", "1024 MB"],
+            answer: 3,
+            hint: "Giá trị này bằng 2 lũy thừa 10.",
+            explanation: "Do máy tính hoạt động theo hệ nhị phân (2^10 = 1024), nên 1 GB = 1024 MB."
+          },
+          {
+            q: "Bộ phận nào chịu trách nhiệm chính trong việc xử lý hình ảnh, đồ họa 3D và xuất tín hiệu ra màn hình?",
+            options: ["GPU (Card đồ họa)", "Nguồn máy tính (PSU)", "Ổ đĩa quang DVD", "Card âm thanh"],
+            answer: 0,
+            hint: "Viết tắt của Graphics Processing Unit.",
+            explanation: "GPU (Graphics Processing Unit) chuyên xử lý song song hàng nghìn tác vụ đồ họa, hiển thị hình ảnh và tăng tốc tính toán AI."
+          },
+          {
+            q: "Loại ổ cứng nào sử dụng chip nhớ flash, không có bộ phận cơ học chuyển động nên tốc độ đọc/ghi nhanh vượt trội?",
+            options: ["Ổ cứng HDD truyền thống", "Đĩa mềm Floppy", "Ổ cứng thể rắn SSD", "Băng từ Cassette"],
+            answer: 2,
+            hint: "Viết tắt của Solid State Drive.",
+            explanation: "SSD (Solid State Drive) lưu dữ liệu trên chip nhớ bán dẫn nên chống sốc tốt, êm ái và nhanh hơn ổ đĩa từ HDD nhiều lần."
+          },
+          {
+            q: "Chương trình cơ sở (firmware) đầu tiên chạy khi bật máy tính để kiểm tra phần cứng và khởi động hệ điều hành gọi là gì?",
+            options: ["BIOS / UEFI", "Microsoft Excel", "Trình duyệt Edge", "Trình nén WinRAR"],
+            answer: 0,
+            hint: "Viết tắt của Basic Input/Output System hoặc giao diện kế nhiệm UEFI.",
+            explanation: "BIOS/UEFI nằm trên bo mạch chủ, thực hiện kiểm tra phần cứng (POST) và nạp hệ điều hành vào RAM khi khởi động máy."
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "Tư duy lập trình",
+        subtitle: "Biến, vòng lặp, thuật toán & rẽ nhánh",
+        icon: "🧩",
+        badge: {
+          id: "badge_stage_2",
+          name: "Kiến trúc sư Thuật toán",
+          icon: "⚙️",
+          color: "from-purple-400 to-indigo-600",
+          coinReward: 35,
+          condition: "Đạt 3 sao (8/8 câu đúng) ở Chặng 2: Tư duy lập trình"
+        },
+        questions: [
+          {
+            q: "Trong lập trình, 'Thuật toán' (Algorithm) được định nghĩa chính xác nhất là gì?",
+            options: [
+              "Một ngôn ngữ lập trình phổ biến như Python",
+              "Dãy hữu hạn các bước thao tác rõ ràng để giải quyết một bài toán",
+              "Phần cứng dùng để tăng tốc độ chạy mã nguồn",
+              "Một lỗi cú pháp khiến chương trình ngừng hoạt động"
+            ],
+            answer: 1,
+            hint: "Giống như một công thức nấu ăn gồm các bước cụ thể có điểm dừng để ra món ăn.",
+            explanation: "Thuật toán là tập hợp hữu hạn các chỉ thị rõ ràng nhằm biến đổi dữ liệu đầu vào thành kết quả đầu ra mong muốn."
+          },
+          {
+            q: "Trong lập trình, 'Biến' (Variable) dùng để làm gì?",
+            options: [
+              "Trang trí giao diện ứng dụng đẹp hơn",
+              "Tắt máy tính tự động sau khi chạy xong",
+              "Lưu trữ dữ liệu trong bộ nhớ và có thể thay đổi giá trị khi chạy",
+              "Dịch mã nguồn sang tiếng Anh"
+            ],
+            answer: 2,
+            hint: "Hãy tưởng tượng biến như một chiếc hộp có dán tên dùng để cất giữ giá trị.",
+            explanation: "Biến là vùng nhớ được đặt tên dùng để lưu trữ dữ liệu và giá trị của nó có thể cập nhật trong quá trình thực thi."
+          },
+          {
+            q: "Cấu trúc điều khiển nào giúp chương trình lựa chọn hành động khác nhau tùy thuộc vào điều kiện đúng hay sai?",
+            options: ["Cấu trúc tuần tự", "Cấu trúc rẽ nhánh (If - Else)", "Khai báo hằng số", "Ghi chú (Comment)"],
+            answer: 1,
+            hint: "Tương ứng với câu nói: 'Nếu trời mưa thì mang ô, ngược lại thì đội mũ'.",
+            explanation: "Cấu trúc rẽ nhánh (If... Else...) kiểm tra biểu thức điều kiện logic: Đúng thì chạy nhánh A, Sai thì chạy nhánh B."
+          },
+          {
+            q: "Khi muốn máy tính lặp lại một khối lệnh 10 lần liên tiếp mà không phải viết lại mã nguồn 10 lần, ta nên dùng cấu trúc nào?",
+            options: ["Vòng lặp (Loop - For/While)", "Cấu trúc rẽ nhánh đơn", "Biến toàn cục", "Hàm thoát chương trình"],
+            answer: 0,
+            hint: "Cấu trúc giúp tự động hóa các thao tác lặp đi lặp lại.",
+            explanation: "Vòng lặp (For, While) cho phép thực thi lặp lại một khối lệnh cho đến khi đạt đủ số lần hoặc thỏa điều kiện dừng."
+          },
+          {
+            q: "Quá trình tìm kiếm và sửa chữa các lỗi sai trong mã nguồn chương trình được gọi là gì?",
+            options: ["Compiling (Biên dịch)", "Debugging (Gỡ lỗi)", "Deploying (Triển khai)", "Formatting (Định dạng)"],
+            answer: 1,
+            hint: "Từ tiếng Anh có nghĩa là 'bắt con bọ (bug)' trong chương trình.",
+            explanation: "Debugging (gỡ lỗi) là quá trình kiểm tra, tìm nguyên nhân gây lỗi (bug) và sửa chữa để chương trình chạy đúng."
+          },
+          {
+            q: "Mảng (Array / List) trong lập trình là cấu trúc dữ liệu dùng để làm gì?",
+            options: [
+              "Lưu trữ một danh sách nhiều phần tử theo thứ tự chỉ mục (index)",
+              "Chỉ lưu duy nhất một giá trị Đúng hoặc Sai",
+              "Tắt kết nối Internet của máy tính",
+              "Thay đổi màu sắc đèn bàn phím"
+            ],
+            answer: 0,
+            hint: "Ví dụ: lưu danh sách điểm số của 40 học sinh trong cùng một biến có đánh số thứ tự.",
+            explanation: "Mảng (Array/List) lưu trữ tập hợp nhiều phần tử liên tiếp nhau, mỗi phần tử được truy cập nhanh thông qua chỉ số (index)."
+          },
+          {
+            q: "Việc chia nhỏ một chương trình lớn thành các khối mã độc lập, có thể tái sử dụng nhiều lần được gọi là viết gì?",
+            options: ["Hàm (Function / Method)", "Chú thích (Comment)", "Lỗi tràn bộ nhớ", "Biến tạm"],
+            answer: 0,
+            hint: "Một khối lệnh có tên riêng, nhận tham số đầu vào và có thể trả về kết quả.",
+            explanation: "Hàm (Function) giúp đóng gói logic thành các mô-đun gọn gàng, dễ bảo trì và tái sử dụng ở nhiều nơi."
+          },
+          {
+            q: "Vòng lặp vô tận (Infinite Loop) xảy ra khi nào?",
+            options: [
+              "Khi điều kiện dừng của vòng lặp không bao giờ trở thành Sai",
+              "Khi chương trình không có biến nào",
+              "Khi máy tính hết pin",
+              "Khi dùng câu lệnh If duy nhất một lần"
+            ],
+            answer: 0,
+            hint: "Ví dụ viết while (True) mà bên trong không có lệnh break.",
+            explanation: "Nếu điều kiện lặp luôn luôn đúng mà không có lệnh thoát, chương trình sẽ lặp mãi mãi gây treo hoặc ngốn tài nguyên CPU."
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "Mạng máy tính & Internet",
+        subtitle: "Địa chỉ IP, DNS, HTTP/HTTPS & hạ tầng mạng",
+        icon: "🌐",
+        badge: {
+          id: "badge_stage_3",
+          name: "Hoa tiêu Không gian mạng",
+          icon: "📡",
+          color: "from-cyan-400 to-teal-600",
+          coinReward: 40,
+          condition: "Đạt 3 sao (8/8 câu đúng) ở Chặng 3: Mạng máy tính & Internet"
+        },
+        questions: [
+          {
+            q: "Mạng cục bộ kết nối các máy tính trong phạm vi hẹp như một gia đình, văn phòng hay trường học gọi là gì?",
+            options: ["WAN (Mạng diện rộng)", "LAN (Mạng cục bộ)", "MAN (Mạng đô thị)", "PAN (Mạng cá nhân Bluetooth)"],
+            answer: 1,
+            hint: "Viết tắt của Local Area Network.",
+            explanation: "LAN (Local Area Network) kết nối các thiết bị trong phạm vi địa lý nhỏ như phòng máy, tòa nhà với tốc độ truyền cao."
+          },
+          {
+            q: "Hệ thống nào đóng vai trò như 'danh bạ điện thoại' của Internet, chuyển đổi tên miền (như google.com) thành địa chỉ IP?",
+            options: ["DNS (Domain Name System)", "CPU", "HDMI", "USB"],
+            answer: 0,
+            hint: "Viết tắt của Domain Name System.",
+            explanation: "DNS phân giải tên miền dễ nhớ với con người thành địa chỉ IP dạng số để máy tính định tuyến và kết nối tới máy chủ."
+          },
+          {
+            q: "Thiết bị mạng nào chịu trách nhiệm định tuyến (chuyển tiếp) các gói dữ liệu giữa mạng nội bộ và mạng Internet?",
+            options: ["Router (Bộ định tuyến)", "Máy quét Scanner", "Bàn phím cơ", "Loa Bluetooth"],
+            answer: 0,
+            hint: "Thiết bị quen thuộc ở nhà phát Wi-Fi và nối cáp mạng ra bên ngoài.",
+            explanation: "Router (bộ định tuyến) tìm đường đi tối ưu và chuyển tiếp gói tin giữa các mạng khác nhau, kết nối mạng LAN với Internet."
+          },
+          {
+            q: "Sự khác biệt quan trọng nhất giữa giao thức HTTPS và HTTP khi truy cập trang web là gì?",
+            options: [
+              "HTTPS mã hóa dữ liệu truyền tải bằng SSL/TLS giúp bảo mật thông tin",
+              "HTTPS chỉ mở được hình ảnh đen trắng",
+              "HTTP nhanh hơn gấp 100 lần và bảo mật hơn",
+              "HTTPS không cần kết nối Internet"
+            ],
+            answer: 0,
+            hint: "Chữ 'S' ở cuối HTTPS là viết tắt của Secure (An toàn).",
+            explanation: "HTTPS sử dụng chứng chỉ SSL/TLS để mã hóa toàn bộ dữ liệu trao đổi giữa trình duyệt và máy chủ, chống nghe lén."
+          },
+          {
+            q: "Địa chỉ IPv4 phổ biến hiện nay thường được biểu diễn dưới dạng nào?",
+            options: [
+              "4 nhóm số thập phân (từ 0 đến 255) ngăn cách bởi dấu chấm, ví dụ 192.168.1.1",
+              "Một chuỗi 100 chữ cái in hoa",
+              "Chỉ gồm 2 chữ số duy nhất",
+              "Tên đầy đủ của chủ sở hữu máy tính"
+            ],
+            answer: 0,
+            hint: "Gồm 32 bit chia thành 4 octet ngăn cách bởi dấu chấm.",
+            explanation: "Địa chỉ IPv4 dài 32 bit, chia làm 4 nhóm 8 bit (0–255) cách nhau bằng dấu chấm, ví dụ: 192.168.1.1."
+          },
+          {
+            q: "Mỗi card mạng (NIC) của thiết bị được nhà sản xuất gắn cố định một mã định danh vật lý duy nhất gọi là gì?",
+            options: ["Địa chỉ MAC (Media Access Control)", "Mã PIN màn hình", "Tên tệp tin", "Mật khẩu Wi-Fi"],
+            answer: 0,
+            hint: "Gồm 6 cặp ký tự thập lục phân như 00:1A:2B:3C:4D:5E.",
+            explanation: "Địa chỉ MAC là định danh phần cứng duy nhất của giao diện mạng ở tầng liên kết dữ liệu."
+          },
+          {
+            q: "Độ trễ thời gian (tính bằng mili-giây) để một gói tin đi từ máy của bạn tới máy chủ và quay trở lại gọi là gì?",
+            options: ["Ping / Latency (Độ trễ mạng)", "Dung lượng ổ đĩa", "Độ phân giải màn hình", "Tần số quét"],
+            answer: 0,
+            hint: "Game thủ thường kiểm tra chỉ số 'ms' này để xem mạng có bị lag hay không.",
+            explanation: "Ping (Round-Trip Time / Latency) đo thời gian phản hồi mạng; chỉ số ping càng thấp thì kết nối càng mượt mà."
+          },
+          {
+            q: "Công nghệ điện toán đám mây (Cloud Computing) cho phép người dùng làm gì?",
+            options: [
+              "Lưu trữ dữ liệu và chạy ứng dụng trên các máy chủ từ xa qua Internet thay vì chỉ trên ổ cứng cá nhân",
+              "Dự báo thời tiết chính xác 100% nhờ nhìn mây",
+              "Tăng kích thước vật lý của màn hình laptop",
+              "Chạy phần mềm mà không cần điện"
+            ],
+            answer: 0,
+            hint: "Các dịch vụ như Google Drive, OneDrive, iCloud đều dựa trên công nghệ này.",
+            explanation: "Điện toán đám mây cung cấp tài nguyên lưu trữ, tính toán theo nhu cầu thông qua Internet mọi lúc, mọi nơi."
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "Cơ sở dữ liệu & Dữ liệu lớn",
+        subtitle: "SQL, bảng, khóa chính & lưu trữ dữ liệu",
+        icon: "🗄️",
+        badge: {
+          id: "badge_stage_4",
+          name: "Bậc thầy Dữ liệu",
+          icon: "📊",
+          color: "from-amber-400 to-orange-600",
+          coinReward: 45,
+          condition: "Đạt 3 sao (8/8 câu đúng) ở Chặng 4: Cơ sở dữ liệu & Dữ liệu lớn"
+        },
+        questions: [
+          {
+            q: "Cơ sở dữ liệu (Database) là gì?",
+            options: [
+              "Tập hợp dữ liệu có tổ chức, được lưu trữ và quản lý khoa học để truy xuất, cập nhật nhanh chóng",
+              "Một loại dây cáp nối màn hình với thùng máy",
+              "Phần mềm dùng để vẽ tranh hoạt hình",
+              "Tên gọi khác của bàn phím máy tính"
+            ],
+            answer: 0,
+            hint: "Nơi lưu trữ thông tin học sinh, đơn hàng, tài khoản ngân hàng một cách có cấu trúc.",
+            explanation: "Cơ sở dữ liệu (Database) tổ chức thông tin có hệ thống giúp lưu trữ, tìm kiếm, thêm, sửa, xóa dữ liệu chính xác."
+          },
+          {
+            q: "Ngôn ngữ truy vấn tiêu chuẩn phổ biến nhất dùng để làm việc với cơ sở dữ liệu quan hệ là gì?",
+            options: ["SQL (Structured Query Language)", "HTML", "CSS", "JPEG"],
+            answer: 0,
+            hint: "Viết tắt của Structured Query Language.",
+            explanation: "SQL là ngôn ngữ chuẩn dùng để truy vấn, định nghĩa và thao tác dữ liệu trong các hệ quản trị CSDL quan hệ (MySQL, PostgreSQL, SQL Server...)."
+          },
+          {
+            q: "Trong một bảng (Table) của cơ sở dữ liệu quan hệ, 'Khóa chính' (Primary Key) có đặc điểm gì bắt buộc?",
+            options: [
+              "Giá trị phải là duy nhất cho mỗi bản ghi (hàng) và không được để trống (NULL)",
+              "Mọi hàng đều phải có giá trị giống hệt nhau",
+              "Chỉ được phép chứa hình ảnh",
+              "Tự động xóa sau 5 phút"
+            ],
+            answer: 0,
+            hint: "Giống như số Căn cước công dân hoặc Mã số sinh viên để phân biệt từng người.",
+            explanation: "Khóa chính (Primary Key) định danh duy nhất mỗi bản ghi trong bảng nên không được trùng lặp và không được mang giá trị NULL."
+          },
+          {
+            q: "Câu lệnh SQL nào dùng để lấy (truy vấn) dữ liệu từ một bảng trong cơ sở dữ liệu?",
+            options: ["SELECT", "DELETE", "DROP", "SHUTDOWN"],
+            answer: 0,
+            hint: "Từ tiếng Anh có nghĩa là 'chọn lựa' (ví dụ: SELECT * FROM HocSinh).",
+            explanation: "Câu lệnh SELECT dùng để truy xuất và hiển thị dữ liệu từ một hoặc nhiều bảng theo điều kiện chỉ định."
+          },
+          {
+            q: "Trong bảng dữ liệu, một hàng ngang (Row / Record) thường đại diện cho điều gì?",
+            options: [
+              "Một đối tượng hoặc một bản ghi cụ thể (ví dụ: thông tin đầy đủ của 1 học sinh)",
+              "Tên của toàn bộ cơ sở dữ liệu",
+              "Kiểu dữ liệu của cả hệ thống",
+              "Mật khẩu quản trị viên"
+            ],
+            answer: 0,
+            hint: "Cột (Column) là thuộc tính (Tên, Tuổi), còn Hàng (Row) là từng cá thể cụ thể.",
+            explanation: "Mỗi hàng (Record/Tuple) lưu trữ trọn bộ thông tin của một thực thể đơn lẻ trong bảng."
+          },
+          {
+            q: "Trường dữ liệu dùng để liên kết hai bảng với nhau (tham chiếu tới Khóa chính của bảng khác) được gọi là gì?",
+            options: ["Khóa ngoại (Foreign Key)", "Khóa cửa thông minh", "Từ khóa tìm kiếm", "Khóa bàn phím"],
+            answer: 0,
+            hint: "Đối lập với Primary Key (Khóa chính) là Foreign Key.",
+            explanation: "Khóa ngoại (Foreign Key) tạo mối liên kết quan hệ giữa các bảng và đảm bảo tính toàn vẹn tham chiếu dữ liệu."
+          },
+          {
+            q: "Ba đặc trưng kinh điển (3V) thường dùng để mô tả Dữ liệu lớn (Big Data) là gì?",
+            options: [
+              "Volume (Khối lượng lớn), Velocity (Tốc độ nhanh), Variety (Đa dạng định dạng)",
+              "Video, Voice, Vibration",
+              "Virus, VPN, Virtual",
+              "Voltage, Vacuum, Valve"
+            ],
+            answer: 0,
+            hint: "Ba từ tiếng Anh bắt đầu bằng chữ V nói về Khối lượng, Tốc độ và Sự đa dạng.",
+            explanation: "Big Data đặc trưng bởi Volume (lượng dữ liệu khổng lồ), Velocity (tốc độ sinh và xử lý cực nhanh) và Variety (nhiều loại dữ liệu có/không cấu trúc)."
+          },
+          {
+            q: "Việc sao lưu dữ liệu định kỳ (Backup) nhằm mục đích chính là gì?",
+            options: [
+              "Khôi phục lại dữ liệu an toàn khi xảy ra sự cố hỏng ổ cứng, xóa nhầm hoặc tấn công mạng",
+              "Làm cho màn hình sáng hơn",
+              "Giảm dung lượng RAM xuống 0",
+              "Tăng tốc độ quạt tản nhiệt"
+            ],
+            answer: 0,
+            hint: "Tạo bản dự phòng an toàn phòng khi bản gốc gặp sự cố.",
+            explanation: "Backup tạo các bản sao lưu dự phòng để đảm bảo dữ liệu quan trọng không bị mất mát vĩnh viễn khi gặp rủi ro."
+          }
+        ]
+      },
+      {
+        id: 5,
+        title: "Khám phá AI",
+        subtitle: "Trí tuệ nhân tạo, học máy, mạng nơ-ron & AI tạo sinh",
+        icon: "🤖",
+        badge: {
+          id: "badge_stage_5",
+          name: "Nhà thám hiểm AI",
+          icon: "🧠",
+          color: "from-pink-400 to-rose-600",
+          coinReward: 50,
+          condition: "Đạt 3 sao (8/8 câu đúng) ở Chặng 5: Khám phá AI"
+        },
+        questions: [
+          {
+            q: "Trí tuệ nhân tạo (AI - Artificial Intelligence) là lĩnh vực khoa học máy tính tập trung vào điều gì?",
+            options: [
+              "Sản xuất dây cáp mạng tốc độ cao",
+              "Tạo ra hệ thống máy móc có khả năng mô phỏng trí thông minh và học hỏi như con người",
+              "Thay thế hoàn toàn màn hình máy tính bằng kính",
+              "Chỉ dùng để sửa chữa phần cứng điện thoại"
+            ],
+            answer: 1,
+            hint: "Giúp máy tính biết nhận diện, suy luận, hiểu ngôn ngữ và ra quyết định.",
+            explanation: "AI giúp hệ thống máy tính thực hiện các tác vụ đòi hỏi trí thông minh như nhận diện hình ảnh, hiểu ngôn ngữ và suy luận."
+          },
+          {
+            q: "Học máy (Machine Learning) giúp máy tính thông minh hơn bằng cách nào?",
+            options: [
+              "Lập trình viên phải viết tay từng quy tắc cho mọi tình huống",
+              "Học hỏi quy luật từ tập dữ liệu mẫu để tự đưa ra dự đoán",
+              "Tăng dung lượng pin cho thiết bị",
+              "Tự động xóa toàn bộ dữ liệu cũ mỗi ngày"
+            ],
+            answer: 1,
+            hint: "Máy tự rút ra kinh nghiệm từ dữ liệu huấn luyện thay vì chỉ làm theo lệnh cứng.",
+            explanation: "Machine Learning cho phép thuật toán tự rút ra mẫu (pattern) từ dữ liệu huấn luyện mà không cần lập trình cứng từng quy tắc."
+          },
+          {
+            q: "Các trợ lý hội thoại thông minh như ChatGPT hay Gemini thuộc nhóm công nghệ AI nào?",
+            options: [
+              "AI Tạo sinh & Mô hình Ngôn ngữ Lớn (LLM)",
+              "Phần mềm diệt virus truyền thống",
+              "Hệ thống quản lý bảng tính",
+              "Trình điều khiển máy in"
+            ],
+            answer: 0,
+            hint: "Viết tắt là Generative AI và Large Language Model (LLM).",
+            explanation: "ChatGPT, Gemini là các mô hình ngôn ngữ lớn (LLM) thuộc AI tạo sinh, có khả năng hiểu ngữ cảnh và sinh văn bản tự nhiên."
+          },
+          {
+            q: "Lĩnh vực AI nào giúp camera điện thoại nhận diện khuôn mặt người dùng để mở khóa?",
+            options: [
+              "Thị giác máy tính (Computer Vision)",
+              "Xử lý bảng tính (Spreadsheet)",
+              "Nén tệp tin (File Compression)",
+              "Quản lý bộ nhớ ảo"
+            ],
+            answer: 0,
+            hint: "Giúp máy tính 'nhìn' và hiểu nội dung trong hình ảnh/video.",
+            explanation: "Computer Vision (Thị giác máy tính) giúp máy tính phân tích thông tin từ hình ảnh hoặc video như nhận diện khuôn mặt, vật thể."
+          },
+          {
+            q: "Hiện tượng AI đôi khi tự tạo ra thông tin nghe có vẻ hợp lý nhưng thực tế lại sai sự thật được gọi là gì?",
+            options: [
+              "Ảo giác AI (AI Hallucination)",
+              "Ép xung CPU (Overclocking)",
+              "Tràn bộ nhớ đệm",
+              "Phân mảnh ổ đĩa"
+            ],
+            answer: 0,
+            hint: "Khi AI 'bịa' ra thông tin trôi chảy nhưng thiếu căn cứ thực tế.",
+            explanation: "AI Hallucination xảy ra khi mô hình dự đoán chuỗi từ ngữ nghe trôi chảy nhưng sai lệch thực tế, nên người dùng luôn cần kiểm chứng."
+          },
+          {
+            q: "Kỹ thuật viết câu lệnh, cung cấp ngữ cảnh rõ ràng để điều khiển AI tạo ra kết quả chính xác nhất gọi là gì?",
+            options: [
+              "Kỹ thuật viết câu lệnh (Prompt Engineering)",
+              "Hàn mạch điện tử",
+              "Định dạng ổ cứng",
+              "Cài đặt hệ điều hành"
+            ],
+            answer: 0,
+            hint: "Câu lệnh bạn nhập vào khung chat với AI được gọi là 'Prompt'.",
+            explanation: "Prompt Engineering là nghệ thuật thiết kế câu lệnh rõ ràng, đủ ngữ cảnh và vai trò để mô hình AI trả về kết quả tối ưu."
+          },
+          {
+            q: "Mạng nơ-ron nhân tạo (Artificial Neural Network) lấy cảm hứng cấu trúc từ đâu?",
+            options: [
+              "Mạng lưới các tế bào thần kinh (nơ-ron) trong bộ não sinh học của con người",
+              "Hệ thống đường ống dẫn nước thành phố",
+              "Cấu trúc của một chiếc ổ khóa cơ",
+              "Mạng lưới đường ray xe lửa"
+            ],
+            answer: 0,
+            hint: "Tên gọi 'nơ-ron' bắt nguồn từ sinh học thần kinh.",
+            explanation: "Mạng nơ-ron nhân tạo mô phỏng cách các tế bào thần kinh liên kết và truyền tín hiệu trong não bộ, là nền tảng của Học sâu (Deep Learning)."
+          },
+          {
+            q: "Phép thử nổi tiếng do nhà toán học Alan Turing đề xuất năm 1950 nhằm đánh giá khả năng biểu hiện hành vi thông minh của máy móc gọi là gì?",
+            options: [
+              "Phép thử Turing (Turing Test)",
+              "Định luật Ohm",
+              "Quy tắc bàn tay phải",
+              "Thuật toán sắp xếp nổi bọt"
+            ],
+            answer: 0,
+            hint: "Mang tên nhà khoa học máy tính vĩ đại Alan Turing.",
+            explanation: "Turing Test kiểm tra xem một cỗ máy có thể giao tiếp tự nhiên đến mức người đối thoại không phân biệt được đó là máy hay người."
+          }
+        ]
+      },
+      {
+        id: 6,
+        title: "An toàn số & Bảo mật",
+        subtitle: "Mật khẩu mạnh, mã hóa, lừa đảo trực tuyến & 2FA",
+        icon: "🛡️",
+        badge: {
+          id: "badge_stage_6",
+          name: "Hiệp sĩ An toàn số",
+          icon: "🛡️",
+          color: "from-emerald-400 to-teal-600",
+          coinReward: 55,
+          condition: "Đạt 3 sao (8/8 câu đúng) ở Chặng 6: An toàn số & Bảo mật"
+        },
+        questions: [
+          {
+            q: "Tiêu chuẩn nào sau đây tạo nên một mật khẩu mạnh và an toàn?",
+            options: [
+              "Ngày tháng năm sinh kèm họ tên đầy đủ",
+              "Dãy số liên tiếp dễ nhớ như 12345678",
+              "Dài từ 12 ký tự trở lên, kết hợp chữ hoa, chữ thường, số và ký tự đặc biệt",
+              "Dùng chung một mật khẩu ngắn cho mọi tài khoản"
+            ],
+            answer: 2,
+            hint: "Càng dài, càng pha trộn nhiều loại ký tự khác nhau thì càng khó bị dò ra.",
+            explanation: "Mật khẩu mạnh cần tối thiểu 12 ký tự, pha trộn chữ hoa, chữ thường, số, ký tự đặc biệt và không chứa thông tin cá nhân dễ đoán."
+          },
+          {
+            q: "Hình thức tấn công giả mạo ngân hàng, cơ quan nhà nước qua tin nhắn/email để đánh cắp mật khẩu hoặc mã OTP gọi là gì?",
+            options: ["Phishing (Lừa đảo trực tuyến)", "Backup (Sao lưu dữ liệu)", "Streaming (Phát trực tuyến)", "Cloud Sync (Đồng bộ đám mây)"],
+            answer: 0,
+            hint: "Phát âm giống từ 'câu cá' (fishing) trong tiếng Anh — thả mồi nhử người dùng.",
+            explanation: "Phishing là chiêu thức giả mạo tổ chức uy tín gửi đường link độc hại để lừa nạn nhân tự nhập mật khẩu hoặc mã OTP."
+          },
+          {
+            q: "Xác thực hai yếu tố (2FA - Two-Factor Authentication) mang lại lợi ích gì?",
+            options: [
+              "Giúp tốc độ mạng Wi-Fi nhanh gấp đôi",
+              "Thêm lớp bảo vệ thứ hai (như mã OTP, ứng dụng xác thực) ngay cả khi lộ mật khẩu",
+              "Tự động khôi phục các tệp tin đã xóa vĩnh viễn",
+              "Cho phép đăng nhập không cần mật khẩu từ bất kỳ đâu"
+            ],
+            answer: 1,
+            hint: "Cần 2 bước xác minh: thứ bạn biết (mật khẩu) + thứ bạn có (điện thoại/mã OTP).",
+            explanation: "2FA yêu cầu hai bước xác minh độc lập, ngăn chặn kẻ gian xâm nhập tài khoản dù chúng đã biết mật khẩu của bạn."
+          },
+          {
+            q: "Bạn nhận được tin nhắn lạ báo 'Trúng thưởng lớn, bấm vào link để nhập tài khoản ngân hàng nhận quà'. Bạn nên làm gì?",
+            options: [
+              "Bấm ngay vào đường link và điền thông tin kẻo lỡ",
+              "Chuyển tiếp tin nhắn cho tất cả bạn bè cùng bấm",
+              "Tuyệt đối không bấm vào link lạ, xóa tin nhắn và chặn nguồn gửi",
+              "Gửi ảnh chụp căn cước công dân để xác nhận"
+            ],
+            answer: 2,
+            hint: "Không bao giờ nhấp vào liên kết đáng ngờ hoặc cung cấp thông tin ngân hàng cho nguồn lạ.",
+            explanation: "Đây là bẫy lừa đảo trúng thưởng điển hình. Tuyệt đối không nhấp vào liên kết đáng ngờ và không cung cấp thông tin cá nhân."
+          },
+          {
+            q: "Phần mềm độc hại mã hóa toàn bộ dữ liệu trên máy tính nạn nhân rồi đòi tiền chuộc được gọi là gì?",
+            options: ["Ransomware (Mã độc tống tiền)", "Freeware", "Shareware", "Firmware"],
+            answer: 0,
+            hint: "Từ tiếng Anh 'Ransom' có nghĩa là 'tiền chuộc'.",
+            explanation: "Ransomware khóa/mã hóa dữ liệu nạn nhân và yêu cầu trả tiền chuộc để lấy khóa giải mã."
+          },
+          {
+            q: "Mạng riêng ảo (VPN - Virtual Private Network) giúp tăng cường bảo mật như thế nào khi dùng Wi-Fi công cộng?",
+            options: [
+              "Tạo đường hầm mã hóa lưu lượng truy cập mạng và ẩn địa chỉ IP thực của người dùng",
+              "Tăng dung lượng pin laptop lên gấp đôi",
+              "Tự động sửa màn hình bị nứt",
+              "Tắt toàn bộ thông báo của hệ điều hành"
+            ],
+            answer: 0,
+            hint: "Tạo một 'đường hầm bảo mật' mã hóa dữ liệu đi qua mạng công cộng.",
+            explanation: "VPN mã hóa dữ liệu truyền đi và che giấu địa chỉ IP thực, giúp bảo vệ quyền riêng tư khi kết nối Wi-Fi công cộng."
+          },
+          {
+            q: "Tường lửa (Firewall) trong hệ thống mạng có chức năng chính là gì?",
+            options: [
+              "Giám sát và kiểm soát lưu lượng mạng ra/vào, ngăn chặn các truy cập trái phép",
+              "Làm mát nhiệt độ bên trong thùng máy tính",
+              "Tăng độ sáng đèn nền bàn phím",
+              "Chuyển đổi văn bản thành giọng nói"
+            ],
+            answer: 0,
+            hint: "Đóng vai trò như 'người gác cổng' kiểm tra gói tin hợp lệ và chặn kẻ xâm nhập.",
+            explanation: "Firewall kiểm tra các gói dữ liệu mạng dựa trên quy tắc bảo mật để ngăn chặn truy cập trái phép từ bên ngoài."
+          },
+          {
+            q: "Vì sao việc cập nhật phần mềm và hệ điều hành thường xuyên lại rất quan trọng đối với an toàn thông tin?",
+            options: [
+              "Vì các bản cập nhật thường vá các lỗ hổng bảo mật mới được phát hiện",
+              "Vì cập nhật giúp xóa sạch toàn bộ ảnh cá nhân",
+              "Vì cập nhật làm máy tính không cần dùng Internet nữa",
+              "Chỉ để thay đổi hình nền màn hình"
+            ],
+            answer: 0,
+            hint: "Tin tặc thường lợi dụng các lỗ hổng bảo mật cũ chưa được vá để tấn công.",
+            explanation: "Các bản cập nhật phần mềm cung cấp bản vá bảo mật quan trọng giúp bịt kín lỗ hổng mà tin tặc có thể khai thác."
+          }
+        ]
+      }
+    ];
+
+    const EXTRA_RUSH_QUESTIONS = [
+      { q: "Phím tắt phổ biến trên Windows để sao chép (Copy) dữ liệu đang chọn là gì?", options: ["Ctrl + V", "Ctrl + C", "Ctrl + X", "Ctrl + Z"], answer: 1, topic: "Kỹ năng số" },
+      { q: "Phím tắt dùng để hoàn tác (Undo) thao tác vừa thực hiện trên hầu hết phần mềm là gì?", options: ["Ctrl + Z", "Ctrl + P", "Ctrl + S", "Ctrl + A"], answer: 0, topic: "Kỹ năng số" },
+      { q: "Hệ nhị phân (Binary) sử dụng hai chữ số nào để biểu diễn mọi dữ liệu?", options: ["1 và 2", "0 và 1", "0 và 9", "A và B"], answer: 1, topic: "Thế giới công nghệ" },
+      { q: "Trong lập trình, kiểu dữ liệu 'Boolean' chỉ nhận hai giá trị nào?", options: ["Số nguyên và số thực", "True (Đúng) và False (Sai)", "Chữ hoa và chữ thường", "Lớn và Nhỏ"], answer: 1, topic: "Tư duy lập trình" },
+      { q: "Toán tử nào dùng để lấy phần dư của phép chia trong Python, C++, JavaScript?", options: ["/", "%", "*", "#"], answer: 1, topic: "Tư duy lập trình" },
+      { q: "Sơ đồ khối (Flowchart) dùng hình thoi để biểu diễn bước nào?", options: ["Bắt đầu / Kết thúc", "Nhập / Xuất dữ liệu", "Kiểm tra điều kiện (Rẽ nhánh)", "Gán giá trị"], answer: 2, topic: "Tư duy lập trình" },
+      { q: "Công nghệ AI giúp chuyển đổi giọng nói của con người thành văn bản được gọi là gì?", options: ["Speech-to-Text", "Text-to-Image", "Blockchain", "Virtual Reality"], answer: 0, topic: "Khám phá AI" },
+      { q: "Dữ liệu dùng để dạy cho mô hình Trí tuệ nhân tạo học cách nhận biết gọi là gì?", options: ["Dữ liệu huấn luyện (Training Data)", "Dữ liệu rác", "Bộ nhớ đệm", "Mã nguồn đóng"], answer: 0, topic: "Khám phá AI" },
+      { q: "Giao thức nào thường được dùng để gửi thư điện tử (Email) đi trên Internet?", options: ["SMTP", "USB", "HDMI", "VGA"], answer: 0, topic: "Mạng máy tính" },
+      { q: "Thiết bị nào thuộc nhóm thiết bị nhập (Input Device)?", options: ["Bàn phím & Chuột", "Màn hình", "Máy in", "Loa ngoài"], answer: 0, topic: "Thế giới công nghệ" },
+      { q: "Định dạng tệp ảnh nào hỗ trợ nền trong suốt (Transparent) phổ biến trên web?", options: ["PNG", "TXT", "MP3", "WAV"], answer: 0, topic: "Thế giới công nghệ" },
+      { q: "Câu lệnh SQL nào dùng để thêm một bản ghi mới vào bảng dữ liệu?", options: ["INSERT INTO", "SELECT FROM", "DELETE FROM", "DROP TABLE"], answer: 0, topic: "Cơ sở dữ liệu" },
+      { q: "Nguyên tắc 'Sao lưu 3-2-1' khuyên nên giữ ít nhất bao nhiêu bản sao dữ liệu?", options: ["3 bản sao", "1 bản duy nhất", "0 bản sao", "10 bản trên cùng 1 USB"], answer: 0, topic: "An toàn số" },
+      { q: "Kỹ thuật giả mạo giọng nói hoặc khuôn mặt người thân bằng AI để lừa đảo gọi là gì?", options: ["Deepfake", "Firewall", "Defragment", "Overclock"], answer: 0, topic: "An toàn số" },
+      { q: "Mã QR (Quick Response) là dạng mã vạch mấy chiều?", options: ["2 chiều (2D)", "1 chiều (1D)", "3 chiều (3D)", "4 chiều (4D)"], answer: 0, topic: "Thế giới công nghệ" },
+      { q: "Đơn vị đo tốc độ xung nhịp của CPU thường là gì?", options: ["Gigahertz (GHz)", "Gigabyte (GB)", "Pixel (px)", "Decibel (dB)"], answer: 0, topic: "Thế giới công nghệ" }
+    ];
+
+    const ALL_RUSH_QUESTIONS = [
+      ...STAGES_DATA.flatMap(s => s.questions.map(q => ({ q: q.q, options: q.options, answer: q.answer, topic: s.title }))),
+      ...EXTRA_RUSH_QUESTIONS
+    ];
+
+    const BONUS_SPEED_BADGE = {
+      id: "badge_bonus_speed",
+      name: "Bậc thầy Tốc độ",
+      icon: "⚡",
+      color: "from-amber-400 via-orange-500 to-rose-500",
+      coinReward: 60,
+      condition: "Đạt từ 60 điểm trở lên trong Chặng Bonus: Đua thời gian 60s"
+    };
+
+    const MEMORY_MASTER_BADGE = {
+      id: "badge_memory_master",
+      name: "Nhà Thông Thái Lật Thẻ",
+      icon: "🃏",
+      color: "from-violet-500 via-purple-600 to-fuchsia-600",
+      coinReward: 40,
+      condition: "Hoàn thành thử thách Ghép Cặp Thuật Ngữ trong Khu Mini-Game"
+    };
+
+    function getAllBadgesList() {
+      return [
+        ...STAGES_DATA.map(s => s.badge),
+        BONUS_SPEED_BADGE,
+        MEMORY_MASTER_BADGE
+      ];
+    }
+
+    const SHOP_POWERUPS = [
+      {
+        id: "fiftyFifty",
+        name: "Trợ giúp 50:50",
+        icon: "✂️",
+        price: 30,
+        color: "from-sky-400 to-blue-600",
+        desc: "Loại bỏ ngẫu nhiên 2 đáp án sai trong bài thi Quiz, giúp bạn dễ dàng chọn đúng!"
+      },
+      {
+        id: "owlHint",
+        name: "Gợi ý của Chú Cú",
+        icon: "💡",
+        price: 25,
+        color: "from-amber-400 to-orange-500",
+        desc: "Chú Cú Thông Thái hé lộ manh mối kiến thức quan trọng trước khi bạn chọn đáp án."
+      },
+      {
+        id: "timeShield",
+        name: "Khiên Thời Gian",
+        icon: "⏳",
+        price: 40,
+        color: "from-emerald-400 to-teal-600",
+        desc: "Cộng ngay +10 giây trong Đua thời gian 60s hoặc miễn trừ hình phạt -5s khi lỡ trả lời sai!"
+      }
+    ];
+
+    const OWL_OUTFITS = [
+      {
+        id: "default",
+        name: "Mũ Cử Nhân Tím",
+        price: 0,
+        icon: "🎓",
+        desc: "Trang phục trí thức truyền thống của Chú Cú Thông Thái."
+      },
+      {
+        id: "golden_glasses",
+        name: "Kính Tri Thức Vàng",
+        price: 60,
+        icon: "🕶️",
+        desc: "Cặp kính siêu trí tuệ lấp lánh ánh vàng cùng ngôi sao thông thái."
+      },
+      {
+        id: "scholar_crown",
+        name: "Vương Miện Học Giả",
+        price: 120,
+        icon: "👑",
+        desc: "Vương miện hoàng gia nạm ngọc dành cho nhà chinh phục tri thức."
+      },
+      {
+        id: "tech_wizard",
+        name: "Pháp Sư Công Nghệ",
+        price: 180,
+        icon: "🧙‍♂️",
+        desc: "Mũ phù thủy vũ trụ kèm áo choàng sao băng đầy quyền năng CNTT!"
+      }
+    ];
+
+    const MEMORY_PAIRS = [
+      { pairId: 1, term: "CPU", def: "Bộ xử lý trung tâm – Bộ não máy tính" },
+      { pairId: 2, term: "RAM", def: "Bộ nhớ tạm thời, mất dữ liệu khi tắt điện" },
+      { pairId: 3, term: "DNS", def: "Hệ thống phân giải tên miền thành địa chỉ IP" },
+      { pairId: 4, term: "Phishing", def: "Giả mạo tổ chức uy tín để lừa lấy mật khẩu/OTP" },
+      { pairId: 5, term: "SQL", def: "Ngôn ngữ truy vấn cơ sở dữ liệu quan hệ" },
+      { pairId: 6, term: "2FA", def: "Xác thực bảo mật 2 lớp (Mật khẩu + Mã OTP)" }
+    ];
+
+    const STORAGE_KEY = "knowledge_quest_vn_save_v2";
+    const LEADERBOARD_KEY = "knowledge_quest_vn_leaderboard_v1";
+    const PLAYER_NAME_KEY = "knowledge_quest_vn_player_name";
+    let currentPlayerName = localStorage.getItem(PLAYER_NAME_KEY) || "";
+
+    function loadLeaderboard() {
+      try {
+        const rows = JSON.parse(localStorage.getItem(LEADERBOARD_KEY) || "[]");
+        return Array.isArray(rows) ? rows : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveLeaderboard(rows) {
+      try {
+        localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(rows));
+      } catch (e) {
+        console.warn("Leaderboard storage error:", e);
+      }
+    }
+
+    function updateLeaderboard() {
+      const name = (currentPlayerName || "").trim();
+      if (!name) return;
+      const rows = loadLeaderboard();
+      const score = getTotalScore();
+      const stars = getTotalStars();
+      const index = rows.findIndex(row => row.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+      if (index >= 0) {
+        rows[index].score = Math.max(Number(rows[index].score) || 0, score);
+        rows[index].stars = Math.max(Number(rows[index].stars) || 0, stars);
+        rows[index].playedAt = new Date().toISOString();
+      } else {
+        rows.push({ name, score, stars, playedAt: new Date().toISOString() });
+      }
+      rows.sort((a, b) => (b.score - a.score) || (b.stars - a.stars));
+      saveLeaderboard(rows.slice(0, 100));
+    }
+
+    function renderLeaderboard() {
+      const rows = loadLeaderboard().sort((a, b) => (b.score - a.score) || (b.stars - a.stars));
+      if (!rows.length) {
+        return `<div class="text-center text-slate-500 text-sm py-5">Chưa có thành tích nào. Hãy là người đầu tiên ghi tên lên bảng vàng! 🌟</div>`;
+      }
+      return `<div class="overflow-x-auto"><table class="w-full text-left text-sm">
+        <thead><tr class="text-purple-700 border-b-2 border-purple-100">
+          <th class="py-2 px-2">Hạng</th><th class="py-2 px-2">Người chơi</th><th class="py-2 px-2 text-right">Điểm</th><th class="py-2 px-2 text-right">Sao</th>
+        </tr></thead><tbody>
+        ${rows.slice(0, 10).map((row, i) => `<tr class="border-b border-slate-100 ${row.name.toLocaleLowerCase() === (currentPlayerName || "").toLocaleLowerCase() ? "bg-amber-50 font-bold" : ""}">
+          <td class="py-2 px-2">${["🥇","🥈","🥉"][i] || (i + 1)}</td>
+          <td class="py-2 px-2 break-words">${escapeHtml(row.name)}</td>
+          <td class="py-2 px-2 text-right font-bold text-sky-700">${Number(row.score) || 0}</td>
+          <td class="py-2 px-2 text-right text-amber-600">${Number(row.stars) || 0} ⭐</td>
+        </tr>`).join("")}
+        </tbody></table></div>`;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+
+    function startGameWithName() {
+      const field = document.getElementById("player-name-input");
+      const name = (field?.value || "").trim();
+      if (!name) {
+        showToast("✏️ Bạn hãy nhập tên trước khi bắt đầu nhé!");
+        field?.focus();
+        return;
+      }
+      if (currentPlayerName && name.toLocaleLowerCase() !== currentPlayerName.toLocaleLowerCase() && hasAnyProgress()) {
+        showToast("🔄 Hãy đặt lại tiến trình hiện tại trước khi đổi người chơi nhé!");
+        return;
+      }
+      if (name.length > 24) {
+        showToast("Tên người chơi tối đa 24 ký tự nhé!");
+        field?.focus();
+        return;
+      }
+      currentPlayerName = name;
+      localStorage.setItem(PLAYER_NAME_KEY, name);
+      gameState.playerName = name;
+      saveGameState();
+      navigateTo("map");
+    }
+
+    const DEFAULT_STATE = {
+      stages: {
+        1: { unlocked: true, completed: false, score: 0, stars: 0 },
+        2: { unlocked: false, completed: false, score: 0, stars: 0 },
+        3: { unlocked: false, completed: false, score: 0, stars: 0 },
+        4: { unlocked: false, completed: false, score: 0, stars: 0 },
+        5: { unlocked: false, completed: false, score: 0, stars: 0 },
+        6: { unlocked: false, completed: false, score: 0, stars: 0 }
+      },
+      coins: 50,
+      rushHighScore: 0,
+      badges: {},
+      claimedBadgeRewards: {},
+      inventory: {
+        fiftyFifty: 1,
+        owlHint: 1,
+        timeShield: 0
+      },
+      ownedOutfits: ["default"],
+      equippedOutfit: "default",
+      soundEnabled: true,
+      bgmEnabled: false
+    };
+
+    let gameState = loadGameState();
+    if (!currentPlayerName && gameState.playerName) {
+      currentPlayerName = gameState.playerName;
+      try { localStorage.setItem(PLAYER_NAME_KEY, currentPlayerName); } catch (e) {}
+    }
+
+    function loadGameState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return JSON.parse(JSON.stringify(DEFAULT_STATE));
+        const parsed = JSON.parse(raw);
+        return {
+          ...JSON.parse(JSON.stringify(DEFAULT_STATE)),
+          ...parsed,
+          stages: {
+            ...JSON.parse(JSON.stringify(DEFAULT_STATE.stages)),
+            ...(parsed.stages || {})
+          },
+          inventory: {
+            ...JSON.parse(JSON.stringify(DEFAULT_STATE.inventory)),
+            ...(parsed.inventory || {})
+          },
+          ownedOutfits: Array.isArray(parsed.ownedOutfits) ? parsed.ownedOutfits : ["default"],
+          badges: parsed.badges || {},
+          claimedBadgeRewards: parsed.claimedBadgeRewards || {}
+        };
+      } catch (e) {
+        return JSON.parse(JSON.stringify(DEFAULT_STATE));
+      }
+    }
+
+    function saveGameState() {
+      try {
+        gameState.playerName = currentPlayerName || gameState.playerName || "";
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState));
+        updateLeaderboard();
+      } catch (e) {
+        console.warn("LocalStorage error:", e);
+      }
+    }
+
+    function getTotalScore() {
+      return [1, 2, 3, 4, 5, 6].reduce((sum, id) => sum + (gameState.stages[id]?.score || 0), 0);
+    }
+
+    function getTotalStars() {
+      return [1, 2, 3, 4, 5, 6].reduce((sum, id) => sum + (gameState.stages[id]?.stars || 0), 0);
+    }
+
+    function getCompletedStagesCount() {
+      return [1, 2, 3, 4, 5, 6].filter(id => gameState.stages[id]?.completed).length;
+    }
+
+    function areAllMainStagesCompleted() {
+      return getCompletedStagesCount() === 6;
+    }
+
+    function hasAnyProgress() {
+      return getTotalScore() > 0 || Object.keys(gameState.badges).length > 0 || gameState.rushHighScore > 0 || gameState.ownedOutfits.length > 1;
+    }
+
+    function getUnclaimedBadgeRewards() {
+      const allBadges = getAllBadgesList();
+      return allBadges.filter(b => Boolean(gameState.badges[b.id]) && !gameState.claimedBadgeRewards[b.id]);
+    }
+
+    function claimBadgeCoinReward(badgeId, silent = false) {
+      const badge = getAllBadgesList().find(b => b.id === badgeId);
+      if (!badge) return 0;
+      if (!gameState.badges[badgeId]) {
+        if (!silent) {
+          playSound('wrong');
+          showToast("🔒 Bạn chưa mở khóa thành tựu này!");
+        }
+        return 0;
+      }
+      if (gameState.claimedBadgeRewards[badgeId]) {
+        if (!silent) {
+          showToast("✓ Bạn đã nhận thưởng Xu của thành tựu này rồi!");
+        }
+        return 0;
+      }
+      const reward = badge.coinReward || 30;
+      gameState.claimedBadgeRewards[badgeId] = formatTodayDate();
+      gameState.coins += reward;
+      saveGameState();
+      if (!silent) {
+        playSound('fanfare');
+        launchConfetti();
+        showToast(`🪙 Tuyệt vời! Bạn đã nhận +${reward} Xu từ thành tựu "${badge.name}"!`);
+        const badgesModal = document.getElementById('badges-modal');
+        if (badgesModal && !badgesModal.classList.contains('hidden')) {
+          openBadgesModal(true);
+        }
+        renderApp();
+      }
+      return reward;
+    }
+
+    function claimAllBadgeCoinRewards() {
+      const unclaimed = getUnclaimedBadgeRewards();
+      if (!unclaimed.length) return;
+      let totalReward = 0;
+      unclaimed.forEach(b => {
+        totalReward += claimBadgeCoinReward(b.id, true);
+      });
+      if (totalReward > 0) {
+        playSound('fanfare');
+        launchConfetti();
+        showToast(`🎉 Đã nhận trọn gói +${totalReward} Xu từ ${unclaimed.length} thành tựu!`);
+        const badgesModal = document.getElementById('badges-modal');
+        if (badgesModal && !badgesModal.classList.contains('hidden')) {
+          openBadgesModal(true);
+        }
+        renderApp();
+      }
+    }
+
+    function formatTodayDate() {
+      const now = new Date();
+      return `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    }
+
+    let toastTimeout = null;
+    function showToast(htmlMsg) {
+      const banner = document.getElementById('toast-banner');
+      const content = document.getElementById('toast-content');
+      if (!banner || !content) return;
+      content.innerHTML = htmlMsg;
+      banner.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 3000);
+    }
+
+    let audioCtx = null;
+    let bgmIntervalId = null;
+    let bgmStep = 0;
+
+    const BGM_MELODY = [
+      523.25, 659.25, 783.99, 659.25, 880.00, 783.99, 659.25, 587.33,
+      523.25, 587.33, 659.25, 783.99, 659.25, 523.25, 587.33, 0,
+      659.25, 783.99, 1046.50, 880.00, 783.99, 659.25, 783.99, 880.00,
+      783.99, 659.25, 587.33, 659.25, 523.25, 0, 523.25, 0
+    ];
+    const BGM_BASS = [
+      261.63, 0, 196.00, 0, 220.00, 0, 196.00, 0,
+      174.61, 0, 220.00, 0, 196.00, 0, 196.00, 0,
+      261.63, 0, 261.63, 0, 220.00, 0, 220.00, 0,
+      174.61, 0, 196.00, 0, 261.63, 0, 261.63, 0
+    ];
+
+    function ensureAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function startBgmLoop() {
+      if (bgmIntervalId) return;
+      ensureAudioContext();
+      bgmIntervalId = setInterval(() => {
+        if (!gameState.bgmEnabled) return;
+        try {
+          ensureAudioContext();
+          const now = audioCtx.currentTime;
+          const idx = bgmStep % BGM_MELODY.length;
+          const melFreq = BGM_MELODY[idx];
+          const bassFreq = BGM_BASS[idx];
+
+          if (melFreq > 0) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(melFreq, now);
+            gain.gain.setValueAtTime(0.045, now);
+            gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.24);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.25);
+          }
+
+          if (bassFreq > 0) {
+            const bOsc = audioCtx.createOscillator();
+            const bGain = audioCtx.createGain();
+            bOsc.type = 'sine';
+            bOsc.frequency.setValueAtTime(bassFreq, now);
+            bGain.gain.setValueAtTime(0.04, now);
+            bGain.gain.exponentialRampToValueAtTime(0.0008, now + 0.3);
+            bOsc.connect(bGain);
+            bGain.connect(audioCtx.destination);
+            bOsc.start(now);
+            bOsc.stop(now + 0.31);
+          }
+
+          bgmStep++;
+        } catch (e) {}
+      }, 280);
+    }
+
+    function stopBgmLoop() {
+      if (bgmIntervalId) {
+        clearInterval(bgmIntervalId);
+        bgmIntervalId = null;
+      }
+    }
+
+    function toggleBgm() {
+      gameState.bgmEnabled = !gameState.bgmEnabled;
+      saveGameState();
+      updateAudioIcons();
+      if (gameState.bgmEnabled) {
+        startBgmLoop();
+        showToast("🎵 Đã bật nhạc nền phiêu lưu!");
+      } else {
+        stopBgmLoop();
+        showToast("🔇 Đã tắt nhạc nền.");
+      }
+    }
+
+    function toggleSound() {
+      gameState.soundEnabled = !gameState.soundEnabled;
+      saveGameState();
+      updateAudioIcons();
+      if (gameState.soundEnabled) playSound('click');
+    }
+
+    function updateAudioIcons() {
+      const sIcon = gameState.soundEnabled ? '🔊' : '🔇';
+      const bIcon = gameState.bgmEnabled ? '🎵' : '🎶';
+      const elS = document.getElementById('sound-icon-global');
+      const elB = document.getElementById('bgm-icon-global');
+      if (elS) elS.textContent = sIcon;
+      if (elB) {
+        elB.textContent = bIcon;
+        elB.parentElement.style.opacity = gameState.bgmEnabled ? '1' : '0.6';
+      }
+    }
+
+    function playSound(type) {
+      if (!gameState.soundEnabled) return;
+      try {
+        ensureAudioContext();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(760, now + 0.08);
+          gain.gain.setValueAtTime(0.11, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+          osc.start(now);
+          osc.stop(now + 0.09);
+        } else if (type === 'coin') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(987.77, now);
+          osc.frequency.setValueAtTime(1318.51, now + 0.08);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        } else if (type === 'correct') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.setValueAtTime(659.25, now + 0.09);
+          osc.frequency.setValueAtTime(783.99, now + 0.18);
+          gain.gain.setValueAtTime(0.17, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.34);
+          osc.start(now);
+          osc.stop(now + 0.34);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(240, now);
+          osc.frequency.linearRampToValueAtTime(160, now + 0.24);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.27);
+          osc.start(now);
+          osc.stop(now + 0.27);
+        } else if (type === 'fanfare') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.type = 'triangle';
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            o.frequency.setValueAtTime(freq, now + idx * 0.1);
+            g.gain.setValueAtTime(0.15, now + idx * 0.1);
+            g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.32);
+            o.start(now + idx * 0.1);
+            o.stop(now + idx * 0.1 + 0.32);
+          });
+        }
+      } catch (e) {}
+    }
+
+    function getOwlMascotSVG(mood = 'idle', sizeClass = 'w-28 h-28 md:w-36 md:h-36', overrideOutfit = null) {
+      const outfit = overrideOutfit || gameState.equippedOutfit || 'default';
+      const animClass = mood === 'happy' ? 'owl-happy' : mood === 'sad' ? 'owl-sad' : 'owl-idle';
+
+      const eyesMarkup = mood === 'happy'
+        ? `<path d="M56 76 Q66 64 76 76" stroke="#1E293B" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+           <path d="M104 76 Q114 64 124 76" stroke="#1E293B" stroke-width="4.5" stroke-linecap="round" fill="none"/>`
+        : mood === 'sad'
+        ? `<circle cx="66" cy="76" r="10" fill="#1E293B"/><circle cx="63" cy="73" r="3" fill="#FFF"/>
+           <path d="M54 63 L75 68" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>
+           <circle cx="114" cy="76" r="10" fill="#1E293B"/><circle cx="111" cy="73" r="3" fill="#FFF"/>
+           <path d="M126 63 L105 68" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>`
+        : `<circle cx="66" cy="76" r="10.5" fill="#1E293B"/><circle cx="62.5" cy="72.5" r="3.5" fill="#FFF"/>
+           <circle cx="114" cy="76" r="10.5" fill="#1E293B"/><circle cx="110.5" cy="72.5" r="3.5" fill="#FFF"/>`;
+
+      let cloakMarkup = '';
+      if (outfit === 'tech_wizard') {
+        cloakMarkup = `
+          <path d="M30 98 Q90 112 150 98 L160 156 Q90 172 20 156 Z" fill="#1D4ED8" opacity="0.9"/>
+          <circle cx="48" cy="136" r="3" fill="#FACC15"/><circle cx="132" cy="136" r="3" fill="#FACC15"/>
+        `;
+      }
+
+      let glassesMarkup = `
+        <circle cx="66" cy="76" r="22" stroke="#FACC15" stroke-width="4" fill="none"/>
+        <circle cx="114" cy="76" r="22" stroke="#FACC15" stroke-width="4" fill="none"/>
+        <line x1="88" y1="76" x2="92" y2="76" stroke="#FACC15" stroke-width="4"/>
+      `;
+      if (outfit === 'golden_glasses') {
+        glassesMarkup = `
+          <polygon points="42,60 88,60 84,92 46,92" stroke="#F59E0B" stroke-width="4.5" fill="#FDE047" fill-opacity="0.22"/>
+          <polygon points="92,60 138,60 134,92 96,92" stroke="#F59E0B" stroke-width="4.5" fill="#FDE047" fill-opacity="0.22"/>
+          <line x1="88" y1="72" x2="92" y2="72" stroke="#F59E0B" stroke-width="5"/>
+          <text x="136" y="56" font-size="16">✨</text>
+        `;
+      }
+
+      let hatMarkup = `
+        <polygon points="90,10 136,26 90,40 44,26" fill="#1E293B"/>
+        <rect x="68" y="31" width="44" height="10" rx="4" fill="#334155"/>
+        <path d="M90 26 L124 35 L124 50" stroke="#FACC15" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="124" cy="52" r="3.5" fill="#FACC15"/>
+      `;
+      if (outfit === 'scholar_crown') {
+        hatMarkup = `
+          <polygon points="56,38 62,14 78,28 90,10 102,28 118,14 124,38" fill="#FACC15" stroke="#B45309" stroke-width="2.5"/>
+          <circle cx="90" cy="24" r="4" fill="#E11D48"/>
+          <circle cx="70" cy="29" r="3" fill="#0284C7"/>
+          <circle cx="110" cy="29" r="3" fill="#0284C7"/>
+        `;
+      } else if (outfit === 'tech_wizard') {
+        hatMarkup = `
+          <ellipse cx="90" cy="36" rx="52" ry="10" fill="#1E3A8A"/>
+          <polygon points="58,36 90,2 122,36" fill="#2563EB"/>
+          <polygon points="90,12 93,20 101,20 94,25 97,32 90,27 83,32 86,25 79,20 87,20" fill="#FACC15"/>
+        `;
+      }
+
+      return `
+        <svg class="${sizeClass} ${animClass} drop-shadow-md flex-shrink-0" viewBox="0 0 180 180" fill="none">
+          <ellipse cx="90" cy="108" rx="56" ry="58" fill="#7C3AED"/>
+          ${cloakMarkup}
+          <ellipse cx="90" cy="118" rx="38" ry="40" fill="#FEF3C7"/>
+          <path d="M74 104 Q80 110 86 104" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+          <path d="M94 104 Q100 110 106 104" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+          <path d="M84 118 Q90 124 96 118" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+          <path d="M35 92 C16 105, 18 138, 42 142 C46 125, 45 106, 35 92 Z" fill="#6D28D9"/>
+          <path d="M145 92 C164 105, 162 138, 138 142 C134 125, 135 106, 145 92 Z" fill="#6D28D9"/>
+          <circle cx="90" cy="74" r="46" fill="#8B5CF6"/>
+          <path d="M48 45 L42 24 L65 36 Z" fill="#6D28D9"/>
+          <path d="M132 45 L138 24 L115 36 Z" fill="#6D28D9"/>
+          <circle cx="66" cy="76" r="20" fill="#FFFFFF"/>
+          <circle cx="114" cy="76" r="20" fill="#FFFFFF"/>
+          ${eyesMarkup}
+          ${glassesMarkup}
+          <ellipse cx="47" cy="91" rx="7" ry="4" fill="#F472B6" fill-opacity="0.7"/>
+          <ellipse cx="133" cy="91" rx="7" ry="4" fill="#F472B6" fill-opacity="0.7"/>
+          <path d="M83 87 L97 87 L90 99 Z" fill="#F59E0B"/>
+          ${hatMarkup}
+          <ellipse cx="72" cy="164" rx="11" ry="6" fill="#F59E0B"/>
+          <ellipse cx="108" cy="164" rx="11" ry="6" fill="#F59E0B"/>
+        </svg>
+      `;
+    }
+
+    let confettiParticles = [];
+    let confettiAnimId = null;
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const colors = ['#FACC15', '#7C3AED', '#38BDF8', '#F43F5E', '#10B981', '#FB923C'];
+      confettiParticles = Array.from({ length: 95 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: Math.random() * 10 + 6,
+        h: Math.random() * 6 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speedY: Math.random() * 3.5 + 2.5,
+        speedX: Math.random() * 2 - 1,
+        angle: Math.random() * 360,
+        spin: Math.random() * 8 - 4
+      }));
+      if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+      function renderConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let activeCount = 0;
+        confettiParticles.forEach(p => {
+          p.y += p.speedY; p.x += p.speedX; p.angle += p.spin;
+          if (p.y < canvas.height + 20) activeCount++;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate((p.angle * Math.PI) / 180);
+          ctx.fillStyle = p.color; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+        });
+        if (activeCount > 0) confettiAnimId = requestAnimationFrame(renderConfetti);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      renderConfetti();
+    }
+
+    let currentScreen = 'welcome';
+
+    let activeQuiz = {
+      stageId: 1,
+      qIndex: 0,
+      score: 0,
+      correctCount: 0,
+      selectedOption: null,
+      answered: false,
+      hiddenOptions: [],
+      hintRevealed: false
+    };
+
+    let lastStageResult = null;
+
+    let rushState = {
+      timerId: null,
+      timeLeft: 60,
+      score: 0,
+      combo: 0,
+      maxCombo: 0,
+      correctCount: 0,
+      wrongCount: 0,
+      pool: [],
+      poolIndex: 0,
+      locked: false,
+      shieldActive: false,
+      lastResult: null
+    };
+
+    function navigateTo(screen) {
+      playSound('click');
+      if (gameState.bgmEnabled && !bgmIntervalId) startBgmLoop();
+      if (rushState.timerId && screen !== 'rush_play') {
+        clearInterval(rushState.timerId);
+        rushState.timerId = null;
+      }
+      currentScreen = screen;
+      renderApp();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderApp() {
+      const root = document.getElementById('app-root');
+      if (!root) return;
+      switch (currentScreen) {
+        case 'welcome': root.innerHTML = renderWelcomeScreen(); break;
+        case 'map': root.innerHTML = renderMapScreen(); break;
+        case 'quiz': root.innerHTML = renderQuizScreen(); break;
+        case 'stage_complete': root.innerHTML = renderStageCompleteScreen(); break;
+        case 'rush_intro': root.innerHTML = renderRushIntroScreen(); break;
+        case 'rush_play': root.innerHTML = renderRushPlayScreen(); break;
+        case 'rush_complete': root.innerHTML = renderRushCompleteScreen(); break;
+      }
+      updateAudioIcons();
+    }
+
+    function renderWelcomeScreen() {
+      const saved = hasAnyProgress();
+      const startLabel = saved ? "🚀 Tiếp tục hành trình" : "🚀 Bắt đầu hành trình";
+      const totalScore = getTotalScore();
+      const totalStars = getTotalStars();
+      const unclaimedCount = getUnclaimedBadgeRewards().length;
+
+      return `
+        <div class="w-full max-w-2xl mx-auto text-center screen-fade-in my-auto">
+          <div class="bg-white/90 backdrop-blur-md rounded-[2.2rem] p-6 md:p-9 border-4 border-sky-300 shadow-[0_14px_35px_rgba(2,132,199,0.2)]">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100 border-2 border-purple-300 text-purple-700 font-bold text-xs md:text-sm mb-3">
+              <span>✨</span>
+              <span>6 CHẶNG TRI THỨC • 48 CÂU HỎI • MINI-GAMES</span>
+              <span>✨</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-purple-600 to-amber-500 drop-shadow-sm leading-tight">
+              Knowledge Quest
+            </h1>
+            <p class="font-game text-xl sm:text-2xl md:text-3xl font-bold text-purple-700 mt-1 mb-5">
+              Hành Trình Khám Phá Tri Thức
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 bg-gradient-to-r from-sky-50 via-purple-50 to-amber-50 rounded-3xl p-4 md:p-5 border-2 border-sky-200 mb-6">
+              ${getOwlMascotSVG('idle', 'w-28 h-28 md:w-32 md:h-32')}
+              <div class="relative bg-white rounded-2xl p-4 border-2 border-purple-200 shadow-sm text-left flex-1">
+                <p class="font-game text-base md:text-lg font-bold text-purple-700 mb-1">
+                  🦉 Chú Cú Thông Thái xin chào!
+                </p>
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed">
+                  ${saved
+                    ? `Nhà thám hiểm đã đạt <strong class="text-sky-600">${totalScore}/240 điểm</strong>, <strong class="text-amber-500">${totalStars}/18 sao</strong> và có <strong class="text-amber-600">${gameState.coins} Xu</strong>. Chinh phục trọn vẹn 3 sao mỗi chặng để rinh đủ 8 huy hiệu và nhận thêm Xu thưởng thành tựu nhé!`
+                    : `Khám phá 6 vùng đất CNTT kỳ thú! Đạt <strong>3 sao (8/8 câu đúng)</strong> để nhận Huy hiệu kèm <strong>Xu thưởng thành tựu</strong>, dùng Xu mua trợ giúp và thử sức tại Khu Mini-Game nhé!`}
+                </p>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3 max-w-md mx-auto">
+              <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-3 text-left">
+                <label for="player-name-input" class="block text-sm font-bold text-slate-700 mb-1.5">👤 Tên nhà thám hiểm</label>
+                <input id="player-name-input" maxlength="24" autocomplete="nickname"
+                  value="${escapeHtml(currentPlayerName)}" placeholder="Nhập tên của bạn..."
+                  class="w-full rounded-xl border-2 border-sky-200 bg-white px-4 py-3 outline-none focus:border-purple-400 text-slate-800" />
+                <p class="text-xs text-slate-500 mt-1">Muốn đổi người chơi, hãy đặt lại tiến trình hiện tại trước. Bảng xếp hạng vẫn được giữ lại.</p>
+              </div>
+              <button onclick="startGameWithName()" class="btn-game btn-yellow w-full py-3.5 md:py-4 px-6 rounded-2xl text-xl md:text-2xl tracking-wide">
+                ${startLabel}
+              </button>
+
+              <div class="grid grid-cols-2 gap-3">
+                <button onclick="openShopModal('powerups')" class="btn-game btn-emerald py-3 px-4 rounded-2xl text-base md:text-lg flex items-center justify-center gap-1.5">
+                  <span>🎪</span>
+                  <span>Cửa hàng & Game</span>
+                </button>
+                <button onclick="openBadgesModal()" class="btn-game btn-purple py-3 px-4 rounded-2xl text-base md:text-lg flex items-center justify-center gap-1.5 relative">
+                  <span>🏆</span>
+                  <span>Huy hiệu (${Object.keys(gameState.badges).length}/8)</span>
+                  ${unclaimedCount > 0 ? `<span class="absolute -top-2 -right-2 px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 font-extrabold text-xs border-2 border-white animate-bounce">+${unclaimedCount} 🪙</span>` : ''}
+                </button>
+              </div>
+
+              <button onclick="openResetModal()" class="btn-game btn-white py-2.5 px-4 rounded-2xl text-sm md:text-base flex items-center justify-center gap-2 text-slate-500 hover:text-rose-600">
+                <span>🔄</span>
+                <span>Đặt lại tiến trình</span>
+              </button>
+            </div>
+
+            <section class="mt-6 bg-white rounded-2xl border-2 border-amber-200 p-4 text-left shadow-sm">
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <h2 class="font-game text-xl font-extrabold text-amber-700">🏆 Bảng xếp hạng nhà thám hiểm</h2>
+                <span class="text-xs text-slate-500">Top 10</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-2">Xếp theo điểm cao nhất; nếu bằng điểm thì xét số sao.</p>
+              ${renderLeaderboard()}
+            </section>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTopStatusBar(showBackToHome = true) {
+      const totalScore = getTotalScore();
+      const totalStars = getTotalStars();
+      const badgeCount = Object.keys(gameState.badges).length;
+      const unclaimedCount = getUnclaimedBadgeRewards().length;
+
+      return `
+        <header class="w-full max-w-5xl mx-auto mb-4 bg-white/95 backdrop-blur-md rounded-3xl px-3.5 py-2.5 md:px-5 md:py-3 border-3 border-sky-200 shadow-lg flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            ${showBackToHome ? `
+              <button onclick="navigateTo('welcome')" class="btn-game btn-white px-3 py-1.5 rounded-xl text-sm md:text-base flex items-center gap-1.5" title="Trang chào mừng">
+                <span>🏠</span>
+                <span class="hidden sm:inline">Trang chủ</span>
+              </button>
+            ` : ''}
+            <span class="font-game font-extrabold text-base md:text-xl text-purple-700 hidden lg:inline">
+              Knowledge Quest
+            </span>
+          </div>
+
+          <div class="flex items-center gap-1.5 sm:gap-2.5 flex-wrap">
+
+            <div class="flex items-center gap-1 bg-sky-50 border-2 border-sky-200 px-2.5 py-1 rounded-2xl">
+              <span class="text-sm md:text-base">🎯</span>
+              <span class="font-game font-bold text-sky-700 text-xs sm:text-sm md:text-base">${totalScore}/240</span>
+            </div>
+
+            <div class="flex items-center gap-1 bg-amber-50 border-2 border-amber-200 px-2.5 py-1 rounded-2xl">
+              <span class="text-sm md:text-base">⭐</span>
+              <span class="font-game font-bold text-amber-600 text-xs sm:text-sm md:text-base">${totalStars}/18</span>
+            </div>
+
+            <button onclick="openShopModal('powerups')" title="Bấm để vào Cửa hàng Xu & Mini-Game"
+              class="btn-game flex items-center gap-1 bg-yellow-100 hover:bg-yellow-200 border-2 border-yellow-400 px-3 py-1 rounded-2xl">
+              <span class="text-sm md:text-base">🪙</span>
+              <span class="font-game font-extrabold text-amber-800 text-xs sm:text-sm md:text-base">${gameState.coins} Xu</span>
+            </button>
+
+            <button onclick="openShopModal('minigames')" class="btn-game btn-emerald px-3 py-1.5 rounded-2xl text-xs sm:text-sm md:text-base flex items-center gap-1">
+              <span>🎪</span>
+              <span>Cửa hàng & Game</span>
+            </button>
+
+            <button onclick="openBadgesModal()" class="btn-game btn-purple px-3 py-1.5 rounded-2xl text-xs sm:text-sm md:text-base flex items-center gap-1 relative">
+              <span>🎒</span>
+              <span class="hidden sm:inline">Huy hiệu</span>
+              <span class="bg-amber-400 text-slate-900 text-xs font-extrabold px-1.5 py-0.5 rounded-full">${badgeCount}/8</span>
+              ${unclaimedCount > 0 ? `<span class="absolute -top-2 -right-2 px-1.5 py-0.2 rounded-full bg-rose-500 text-white font-extrabold text-[11px] border-2 border-white animate-bounce" title="Có quà Xu thành tựu chưa nhận">+${unclaimedCount}🎁</span>` : ''}
+            </button>
+          </div>
+        </header>
+      `;
+    }
+
+    function renderMapScreen() {
+      const completedCount = getCompletedStagesCount();
+      const isBonusOpen = areAllMainStagesCompleted();
+
+      const alignClasses = [
+        "md:self-start md:ml-8",
+        "md:self-end md:mr-8",
+        "md:self-start md:ml-12",
+        "md:self-end md:mr-12",
+        "md:self-start md:ml-10",
+        "md:self-end md:mr-10"
+      ];
+
+      const stagesCardsHTML = STAGES_DATA.map((stage, idx) => {
+        const st = gameState.stages[stage.id];
+        const isUnlocked = st.unlocked;
+        const isCompleted = st.completed;
+        const hasBadge = Boolean(gameState.badges[stage.badge.id]);
+        const isCurrentActive = isUnlocked && !isCompleted;
+
+        const starsDisplay = [1, 2, 3].map(starIdx =>
+          `<span class="text-lg md:text-xl ${starIdx <= st.stars ? 'text-amber-400 drop-shadow-sm' : 'text-slate-300'}">★</span>`
+        ).join('');
+
+        return `
+          <div class="w-full md:w-[76%] ${alignClasses[idx]} relative z-10">
+            <div onclick="${isUnlocked ? `startStageQuiz(${stage.id})` : 'notifyLockedStage()'}"
+              class="group rounded-3xl p-4 md:p-5 border-4 transition-all duration-200 flex items-center justify-between gap-3.5
+              ${isUnlocked
+                ? 'bg-white/95 hover:bg-white cursor-pointer border-purple-400 shadow-[0_8px_0_#6D28D9]'
+                : 'bg-slate-100/90 cursor-not-allowed border-slate-300 opacity-85 shadow-[0_6px_0_#94A3B8]'}
+              ${isCurrentActive ? 'stage-active-pulse border-amber-400' : ''}">
+
+              <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex flex-col items-center justify-center text-3xl md:text-4xl flex-shrink-0 shadow-inner border-2
+                ${isUnlocked ? 'bg-gradient-to-br from-sky-100 to-purple-100 border-purple-200' : 'bg-slate-200 border-slate-300'}">
+                ${isUnlocked ? stage.icon : '🔒'}
+                <span class="font-game text-[11px] font-extrabold uppercase tracking-wider mt-0.5 ${isUnlocked ? 'text-purple-700' : 'text-slate-500'}">
+                  Chặng ${stage.id}
+                </span>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h3 class="text-lg md:text-2xl font-extrabold ${isUnlocked ? 'text-slate-800 group-hover:text-purple-700' : 'text-slate-500'} truncate">
+                    ${stage.title}
+                  </h3>
+                  ${hasBadge ? `<span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 font-extrabold text-xs">🏅 Đã nhận Huy hiệu</span>` : ''}
+                  ${isCompleted && !hasBadge ? `<span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-700 font-bold text-xs">Chưa đủ 3★</span>` : ''}
+                  ${isCurrentActive ? `<span class="px-2.5 py-0.5 rounded-full bg-amber-300 text-amber-950 font-extrabold text-xs animate-bounce">Đang mở!</span>` : ''}
+                </div>
+                <p class="text-xs md:text-sm text-slate-500 mt-0.5 line-clamp-1">${stage.subtitle}</p>
+
+                <div class="flex items-center gap-3 mt-2 flex-wrap">
+                  <div class="flex items-center tracking-tighter">${starsDisplay}</div>
+                  ${isCompleted || st.score > 0
+                    ? `<span class="text-xs md:text-sm font-bold text-sky-700 bg-sky-100 px-2.5 py-0.5 rounded-xl">Điểm: ${st.score}/40</span>`
+                    : `<span class="text-xs text-slate-400 font-medium">${isUnlocked ? `8 câu hỏi • Đạt 3★ nhận Huy hiệu +${stage.badge.coinReward} Xu` : 'Hoàn thành chặng trước để mở'}</span>`
+                  }
+                </div>
+              </div>
+
+              <div class="flex-shrink-0">
+                ${isUnlocked
+                  ? `<span class="btn-game ${isCompleted ? 'btn-sky' : 'btn-yellow'} px-3.5 py-2 md:px-5 md:py-2.5 rounded-2xl text-sm md:text-base inline-block">
+                      ${isCompleted ? (hasBadge ? 'Ôn luyện' : 'Săn 3★') : 'Chơi ngay'}
+                    </span>`
+                  : `<span class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-lg">🔒</span>`
+                }
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="w-full max-w-5xl mx-auto flex-1 flex flex-col screen-fade-in">
+          ${renderTopStatusBar(true)}
+
+          <div class="bg-white/90 backdrop-blur-md rounded-3xl p-4 md:p-5 border-2 border-sky-200 shadow-md mb-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              ${getOwlMascotSVG('idle', 'w-16 h-16 md:w-20 md:h-20')}
+              <div>
+                <h2 class="text-xl md:text-2xl font-extrabold text-purple-800">🗺️ Bản Đồ Hành Trình 6 Vùng Đất Tri Thức</h2>
+                <p id="map-owl-msg" class="text-slate-600 text-xs md:text-sm">
+                  Hoàn thành đủ <strong>6 chặng chính (${completedCount}/6)</strong> để mở khóa <strong>Đua thời gian 60s</strong>. Đạt <strong>3 sao (8/8 câu)</strong> mỗi chặng để nhận Huy hiệu + thưởng Xu thành tựu!
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 flex-shrink-0">
+              <div class="text-right">
+                <span class="text-xs font-semibold text-slate-500 block">Kỷ lục Đua 60s</span>
+                <span class="font-game text-xl font-extrabold text-orange-600">⚡ ${gameState.rushHighScore}đ</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative flex-1 flex flex-col items-center gap-4 py-2 px-1 md:px-6 mb-10">
+            <svg class="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 800 1050" preserveAspectRatio="none">
+              <path d="M 220 75 C 580 140, 620 210, 560 250 C 460 310, 180 340, 240 420 C 300 490, 600 520, 540 590 C 460 660, 180 690, 240 765 C 300 830, 600 860, 540 925 C 480 980, 400 1005, 400 1030"
+                stroke="#FACC15" stroke-width="14" stroke-linecap="round" stroke-dasharray="22 18" fill="none" opacity="0.85"/>
+              <path d="M 220 75 C 580 140, 620 210, 560 250 C 460 310, 180 340, 240 420 C 300 490, 600 520, 540 590 C 460 660, 180 690, 240 765 C 300 830, 600 860, 540 925 C 480 980, 400 1005, 400 1030"
+                stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-dasharray="22 18" fill="none"/>
+            </svg>
+
+            ${stagesCardsHTML}
+
+            <div class="w-full md:w-[84%] mt-3 relative z-10">
+              <div onclick="${isBonusOpen ? `navigateTo('rush_intro')` : 'notifyLockedBonus()'}"
+                class="rounded-[2rem] p-5 md:p-6 border-4 transition-all duration-200 flex flex-col sm:flex-row items-center justify-between gap-4
+                ${isBonusOpen
+                  ? 'bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 text-white border-yellow-200 cursor-pointer shadow-[0_10px_0_#9A3412] stage-active-pulse'
+                  : 'bg-slate-200/95 text-slate-600 border-slate-300 cursor-not-allowed shadow-[0_6px_0_#94A3B8]'}">
+                <div class="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row">
+                  <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl ${isBonusOpen ? 'bg-white/25 border-white/40' : 'bg-slate-300 border-slate-400'} backdrop-blur-sm flex items-center justify-center text-4xl shadow-inner border-2">
+                    ${isBonusOpen ? '⚡' : '🔒'}
+                  </div>
+                  <div>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-extrabold uppercase tracking-wider mb-1
+                      ${isBonusOpen ? 'bg-yellow-200 text-amber-950' : 'bg-slate-300 text-slate-700'}">
+                      <span>👑 ĐỈNH NÚI THỬ THÁCH • CHẶNG BONUS</span>
+                    </div>
+                    <h3 class="text-2xl md:text-3xl font-extrabold drop-shadow-sm">
+                      Đua Thời Gian (Time Rush 60s)
+                    </h3>
+                    <p class="text-xs md:text-sm ${isBonusOpen ? 'text-amber-50' : 'text-slate-600 font-semibold'} mt-0.5">
+                      ${isBonusOpen
+                        ? `Trộn ngẫu nhiên 64 câu hỏi từ 6 chặng • Combo nhân điểm • 1đ = 2 Xu! (Kỷ lục: ${gameState.rushHighScore}đ)`
+                        : `🔒 Hoàn thành đủ 6 chặng chính để mở khóa: Tiến độ hiện tại ${completedCount}/6 chặng`}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex-shrink-0">
+                  ${isBonusOpen
+                    ? `<span class="btn-game bg-white text-orange-600 border-2 border-yellow-200 shadow-[0_4px_0_#C2410C] px-5 py-3 rounded-2xl text-base md:text-lg inline-block">
+                        🔥 Thử thách ngay
+                      </span>`
+                    : `<span class="px-4 py-2.5 rounded-2xl bg-slate-300 text-slate-700 font-extrabold text-sm inline-flex items-center gap-1.5 border border-slate-400">
+                        🔒 Đã khóa (${completedCount}/6)
+                      </span>`
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function notifyLockedStage() {
+      playSound('wrong');
+      showToast("🔒 Bạn hãy hoàn thành chặng trước đó để mở khóa chặng này nhé!");
+    }
+
+    function notifyLockedBonus() {
+      playSound('wrong');
+      const count = getCompletedStagesCount();
+      showToast(`🔒 Đỉnh núi Đua Thời Gian đang khóa! Hãy hoàn thành đủ 6/6 chặng chính (${count}/6) để mở khóa.`);
+    }
+
+    function startStageQuiz(stageId) {
+      playSound('click');
+      activeQuiz = {
+        stageId: stageId,
+        qIndex: 0,
+        score: 0,
+        correctCount: 0,
+        selectedOption: null,
+        answered: false,
+        hiddenOptions: [],
+        hintRevealed: false
+      };
+      currentScreen = 'quiz';
+      renderApp();
+    }
+
+    function useQuizPowerup(type) {
+      if (activeQuiz.answered) return;
+      const stage = STAGES_DATA.find(s => s.id === activeQuiz.stageId);
+      const qObj = stage.questions[activeQuiz.qIndex];
+
+      if (type === 'fiftyFifty') {
+        if ((gameState.inventory.fiftyFifty || 0) <= 0) {
+          playSound('wrong');
+          showToast("⚠️ Bạn đã hết Trợ giúp 50:50! Hãy ghé Cửa hàng để mua thêm bằng Xu.");
+          return;
+        }
+        if (activeQuiz.hiddenOptions.length > 0) {
+          showToast("✂️ Bạn đã dùng 50:50 cho câu hỏi này rồi!");
+          return;
+        }
+        const wrongIndices = [0, 1, 2, 3].filter(i => i !== qObj.answer);
+        const shuffledWrong = shuffleArray(wrongIndices);
+        activeQuiz.hiddenOptions = [shuffledWrong[0], shuffledWrong[1]];
+        gameState.inventory.fiftyFifty -= 1;
+        saveGameState();
+        playSound('coin');
+        showToast("✂️ Đã loại bỏ 2 đáp án sai!");
+        renderApp();
+      } else if (type === 'owlHint') {
+        if ((gameState.inventory.owlHint || 0) <= 0) {
+          playSound('wrong');
+          showToast("⚠️ Bạn đã hết Gợi ý của Chú Cú! Hãy ghé Cửa hàng để mua thêm.");
+          return;
+        }
+        if (activeQuiz.hintRevealed) {
+          showToast("💡 Chú Cú đã bật gợi ý cho câu hỏi này rồi!");
+          return;
+        }
+        activeQuiz.hintRevealed = true;
+        gameState.inventory.owlHint -= 1;
+        saveGameState();
+        playSound('coin');
+        showToast("💡 Chú Cú đã hé lộ manh mối kiến thức!");
+        renderApp();
+      }
+    }
+
+    function renderQuizScreen() {
+      const stage = STAGES_DATA.find(s => s.id === activeQuiz.stageId);
+      const questionObj = stage.questions[activeQuiz.qIndex];
+      const totalQ = stage.questions.length;
+      const progressPercent = ((activeQuiz.qIndex + (activeQuiz.answered ? 1 : 0)) / totalQ) * 100;
+
+      const isCorrect = activeQuiz.answered && activeQuiz.selectedOption === questionObj.answer;
+      const owlMood = !activeQuiz.answered ? 'idle' : isCorrect ? 'happy' : 'sad';
+      const owlSpeech = !activeQuiz.answered
+        ? (activeQuiz.hintRevealed
+            ? `💡 Manh mối bí mật: ${questionObj.hint}`
+            : `Đọc kỹ câu hỏi nhé! Đạt 8/8 câu đúng (3 sao) để mở khóa Huy hiệu & nhận +${stage.badge.coinReward} Xu thành tựu.`)
+        : isCorrect
+        ? "🎉 Tuyệt vời! Chính xác rồi! Xem phần giải thích bên dưới nhé."
+        : "💡 Chưa chính xác rồi! Đọc giải thích của Chú Cú để ghi nhớ kiến thức nhé!";
+
+      const optionLetters = ['A', 'B', 'C', 'D'];
+
+      const optionsHTML = questionObj.options.map((opt, idx) => {
+        const isHiddenBy5050 = activeQuiz.hiddenOptions.includes(idx);
+        if (isHiddenBy5050 && !activeQuiz.answered) {
+          return `
+            <div class="w-full p-3.5 md:p-4 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/70 text-slate-400 flex items-center gap-3.5 opacity-55">
+              <span class="w-9 h-9 rounded-xl bg-slate-200 text-slate-400 font-game font-extrabold flex items-center justify-center">✂️</span>
+              <span class="italic text-sm">Đáp án đã được loại bỏ bởi trợ giúp 50:50</span>
+            </div>
+          `;
+        }
+
+        let btnClass = "bg-white hover:bg-sky-50 border-slate-200 text-slate-800 shadow-[0_4px_0_#CBD5E1]";
+        let badgeClass = "bg-sky-100 text-sky-700";
+
+        if (activeQuiz.answered) {
+          if (idx === questionObj.answer) {
+            btnClass = "bg-emerald-50 border-emerald-500 text-emerald-900 shadow-[0_4px_0_#059669]";
+            badgeClass = "bg-emerald-500 text-white";
+          } else if (idx === activeQuiz.selectedOption) {
+            btnClass = "bg-rose-50 border-rose-500 text-rose-900 shadow-[0_4px_0_#E11D48]";
+            badgeClass = "bg-rose-500 text-white";
+          } else {
+            btnClass = "bg-slate-50 border-slate-200 text-slate-400 opacity-70";
+            badgeClass = "bg-slate-200 text-slate-500";
+          }
+        }
+
+        return `
+          <button onclick="selectQuizOption(${idx})" ${activeQuiz.answered ? 'disabled' : ''}
+            class="w-full text-left p-3.5 md:p-4 rounded-2xl border-3 transition-all duration-150 flex items-center gap-3.5 ${btnClass} ${!activeQuiz.answered ? 'cursor-pointer active:translate-y-1' : 'cursor-default'}">
+            <span class="w-9 h-9 md:w-10 md:h-10 rounded-xl font-game font-extrabold text-base md:text-lg flex items-center justify-center flex-shrink-0 ${badgeClass}">
+              ${optionLetters[idx]}
+            </span>
+            <span class="font-medium text-sm md:text-base leading-snug flex-1">${opt}</span>
+            ${activeQuiz.answered && idx === questionObj.answer ? '<span class="text-xl">✅</span>' : ''}
+            ${activeQuiz.answered && idx === activeQuiz.selectedOption && idx !== questionObj.answer ? '<span class="text-xl">❌</span>' : ''}
+          </button>
+        `;
+      }).join('');
+
+      return `
+        <div class="w-full max-w-3xl mx-auto flex-1 flex flex-col justify-center screen-fade-in">
+
+          <div class="bg-white/95 backdrop-blur-md rounded-3xl p-3.5 md:p-4 border-2 border-sky-200 shadow-md mb-3.5">
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <button onclick="navigateTo('map')" class="btn-game btn-white px-3 py-1.5 rounded-xl text-xs md:text-sm">
+                ← Bản đồ
+              </button>
+              <div class="text-center">
+                <span class="font-game font-extrabold text-purple-700 text-base md:text-lg">
+                  ${stage.icon} Chặng ${stage.id}: ${stage.title}
+                </span>
+              </div>
+              <div class="bg-amber-100 border-2 border-amber-300 px-3 py-1 rounded-xl font-game font-bold text-amber-800 text-sm md:text-base">
+                Điểm: ${activeQuiz.score}/40
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="flex-1 h-3.5 bg-sky-100 rounded-full overflow-hidden border border-sky-200">
+                <div class="h-full bg-gradient-to-r from-sky-400 to-purple-600 transition-all duration-300 rounded-full"
+                  style="width: ${progressPercent}%"></div>
+              </div>
+              <span class="font-game font-bold text-xs md:text-sm text-slate-600">
+                Câu ${activeQuiz.qIndex + 1}/${totalQ}
+              </span>
+            </div>
+          </div>
+
+          <div class="bg-white/90 backdrop-blur-md rounded-2xl px-3.5 py-2 border-2 border-amber-200 shadow-sm mb-3.5 flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-extrabold text-slate-600 flex items-center gap-1">
+              <span>🎒</span><span>Trợ giúp nhanh:</span>
+            </span>
+            <div class="flex items-center gap-2 flex-wrap">
+              <button onclick="useQuizPowerup('fiftyFifty')" ${activeQuiz.answered || activeQuiz.hiddenOptions.length > 0 ? 'disabled' : ''}
+                class="btn-game btn-sky px-3 py-1 rounded-xl text-xs md:text-sm flex items-center gap-1.5">
+                <span>✂️ 50:50</span>
+                <span class="bg-white text-sky-800 font-extrabold px-1.5 py-0.2 rounded-full text-xs">${gameState.inventory.fiftyFifty || 0}</span>
+              </button>
+              <button onclick="useQuizPowerup('owlHint')" ${activeQuiz.answered || activeQuiz.hintRevealed ? 'disabled' : ''}
+                class="btn-game btn-yellow px-3 py-1 rounded-xl text-xs md:text-sm flex items-center gap-1.5">
+                <span>💡 Gợi ý Cú</span>
+                <span class="bg-white text-amber-800 font-extrabold px-1.5 py-0.2 rounded-full text-xs">${gameState.inventory.owlHint || 0}</span>
+              </button>
+              <button onclick="openShopModal('powerups')" class="text-xs font-bold text-purple-700 hover:underline px-2 py-1">
+                + Mua thêm (${gameState.coins} Xu)
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white/95 backdrop-blur-md rounded-[2rem] p-5 md:p-7 border-4 border-purple-200 shadow-xl">
+            <div class="mb-4">
+              <span class="inline-block px-3 py-1 rounded-full bg-purple-100 text-purple-700 font-bold text-xs mb-2">
+                Câu hỏi ${activeQuiz.qIndex + 1}/8 • +5 điểm
+              </span>
+              <h3 class="text-lg md:text-2xl font-bold text-slate-800 leading-snug">
+                ${questionObj.q}
+              </h3>
+            </div>
+
+            <div class="flex flex-col gap-2.5">
+              ${optionsHTML}
+            </div>
+
+            <div class="mt-4 rounded-2xl p-3.5 md:p-4 border-2 ${!activeQuiz.answered ? (activeQuiz.hintRevealed ? 'bg-amber-50 border-amber-300' : 'bg-sky-50/80 border-sky-200') : isCorrect ? 'bg-emerald-50 border-emerald-300' : 'bg-amber-50 border-amber-300'} flex flex-col sm:flex-row items-center gap-3.5">
+              ${getOwlMascotSVG(owlMood, 'w-16 h-16 md:w-20 md:h-20')}
+              <div class="flex-1 text-center sm:text-left">
+                <p class="font-game font-bold text-sm md:text-base ${!activeQuiz.answered ? 'text-sky-900' : isCorrect ? 'text-emerald-800' : 'text-amber-900'}">
+                  ${owlSpeech}
+                </p>
+                ${activeQuiz.answered ? `
+                  <div class="mt-1.5 text-xs md:text-sm text-slate-700 bg-white/85 p-2.5 rounded-xl border border-slate-200 leading-relaxed">
+                    <strong class="text-purple-700">📚 Giải thích:</strong> ${questionObj.explanation}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+
+            ${activeQuiz.answered ? `
+              <div class="mt-4 text-right screen-fade-in">
+                <button onclick="nextQuizQuestion()" class="btn-game btn-yellow w-full sm:w-auto px-8 py-3 rounded-2xl text-lg md:text-xl">
+                  ${activeQuiz.qIndex + 1 < totalQ ? 'Câu tiếp theo ➔' : 'Xem tổng kết chặng 🏆'}
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function selectQuizOption(optionIndex) {
+      if (activeQuiz.answered) return;
+      const stage = STAGES_DATA.find(s => s.id === activeQuiz.stageId);
+      const questionObj = stage.questions[activeQuiz.qIndex];
+
+      activeQuiz.selectedOption = optionIndex;
+      activeQuiz.answered = true;
+
+      if (optionIndex === questionObj.answer) {
+        activeQuiz.score += 5;
+        activeQuiz.correctCount += 1;
+        playSound('correct');
+      } else {
+        playSound('wrong');
+      }
+      renderApp();
+    }
+
+    function nextQuizQuestion() {
+      const stage = STAGES_DATA.find(s => s.id === activeQuiz.stageId);
+      if (activeQuiz.qIndex + 1 < stage.questions.length) {
+        playSound('click');
+        activeQuiz.qIndex += 1;
+        activeQuiz.selectedOption = null;
+        activeQuiz.answered = false;
+        activeQuiz.hiddenOptions = [];
+        activeQuiz.hintRevealed = false;
+        renderApp();
+      } else {
+        finishStageQuiz();
+      }
+    }
+
+    function finishStageQuiz() {
+      const stage = STAGES_DATA.find(s => s.id === activeQuiz.stageId);
+      const score = activeQuiz.score;
+      const correctCount = activeQuiz.correctCount;
+
+      let stars = 0;
+      if (correctCount === 8) stars = 3;
+      else if (correctCount >= 5) stars = 2;
+      else if (correctCount >= 1) stars = 1;
+
+      const prevRecord = gameState.stages[stage.id];
+      const isPassed = stars >= 1;
+      const isThreeStars = stars === 3;
+
+      if (score >= prevRecord.score) prevRecord.score = score;
+      if (stars >= prevRecord.stars) prevRecord.stars = stars;
+      if (isPassed) prevRecord.completed = true;
+
+      let earnedCoins = correctCount * 3 + (isThreeStars ? 15 : 0);
+      gameState.coins += earnedCoins;
+
+      let newlyEarnedBadge = false;
+      if (isThreeStars && !gameState.badges[stage.badge.id]) {
+        gameState.badges[stage.badge.id] = formatTodayDate();
+        newlyEarnedBadge = true;
+      }
+
+      let nextStageUnlocked = false;
+      if (isPassed && stage.id < 6) {
+        if (!gameState.stages[stage.id + 1].unlocked) {
+          gameState.stages[stage.id + 1].unlocked = true;
+          nextStageUnlocked = true;
+        }
+      }
+
+      saveGameState();
+
+      lastStageResult = {
+        stage,
+        score,
+        stars,
+        correctCount,
+        isPassed,
+        isThreeStars,
+        newlyEarnedBadge,
+        hasBadge: Boolean(gameState.badges[stage.badge.id]),
+        earnedCoins,
+        nextStageUnlocked
+      };
+
+      currentScreen = 'stage_complete';
+      renderApp();
+
+      if (isThreeStars) {
+        playSound('fanfare');
+        launchConfetti();
+      } else if (isPassed) {
+        playSound('correct');
+      } else {
+        playSound('wrong');
+      }
+    }
+
+    function renderStageCompleteScreen() {
+      const res = lastStageResult;
+      if (!res) return renderMapScreen();
+
+      const hasBadge = Boolean(gameState.badges[res.stage.badge.id]);
+      const isRewardClaimed = Boolean(gameState.claimedBadgeRewards[res.stage.badge.id]);
+      const badgeCoinReward = res.stage.badge.coinReward || 30;
+
+      const starsHTML = [1, 2, 3].map(i => `
+        <span class="text-5xl md:text-6xl transition-transform duration-300 ${i <= res.stars ? 'text-amber-400 scale-110 drop-shadow-[0_4px_10px_rgba(250,204,21,0.7)]' : 'text-slate-300'}">★</span>
+      `).join('');
+
+      return `
+        <div class="w-full max-w-2xl mx-auto text-center screen-fade-in my-auto">
+          <div class="bg-white/95 backdrop-blur-md rounded-[2.2rem] p-6 md:p-8 border-4 ${res.isThreeStars ? 'border-amber-400' : res.isPassed ? 'border-sky-300' : 'border-rose-300'} shadow-2xl">
+            <span class="inline-block px-4 py-1 rounded-full ${res.isThreeStars ? 'bg-amber-100 text-amber-800' : res.isPassed ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'} font-extrabold text-xs md:text-sm uppercase mb-2">
+              ${res.isThreeStars ? '👑 XUẤT SẮC TUYỆT ĐỐI • 3 SAO!' : res.isPassed ? '✅ Hoàn thành chặng!' : '💪 Cần cố gắng thêm!'}
+            </span>
+
+            <h2 class="text-2xl md:text-4xl font-extrabold text-purple-800 mb-1">
+              Chặng ${res.stage.id}: ${res.stage.title}
+            </h2>
+
+            <div class="flex items-center justify-center gap-4 my-3">
+              ${starsHTML}
+            </div>
+
+            <div class="inline-flex items-center gap-4 bg-sky-50 border-2 border-sky-200 px-5 py-2.5 rounded-2xl mb-5 flex-wrap justify-center">
+              <div>
+                <span class="text-xs text-slate-500 block font-semibold">Điểm đạt được</span>
+                <span class="font-game text-xl md:text-2xl font-extrabold text-sky-600">${res.score}/40đ</span>
+              </div>
+              <div class="w-px h-8 bg-sky-200"></div>
+              <div>
+                <span class="text-xs text-slate-500 block font-semibold">Câu trả lời đúng</span>
+                <span class="font-game text-xl md:text-2xl font-extrabold text-purple-600">${res.correctCount}/8 câu</span>
+              </div>
+              <div class="w-px h-8 bg-sky-200"></div>
+              <div>
+                <span class="text-xs text-slate-500 block font-semibold">Xu thưởng bài thi</span>
+                <span class="font-game text-xl md:text-2xl font-extrabold text-amber-600">+${res.earnedCoins} 🪙</span>
+              </div>
+            </div>
+
+            ${res.isThreeStars || hasBadge ? `
+              <div class="bg-gradient-to-r from-purple-50 via-amber-50 to-sky-50 rounded-3xl p-4 md:p-5 border-2 border-amber-400 mb-6 flex flex-col sm:flex-row items-center gap-4">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br ${res.stage.badge.color} text-white text-4xl flex items-center justify-center shadow-lg border-2 border-white flex-shrink-0">
+                  ${res.stage.badge.icon}
+                </div>
+                <div class="text-center sm:text-left flex-1">
+                  <span class="text-xs font-extrabold uppercase text-amber-600 tracking-wider">
+                    ${res.newlyEarnedBadge ? '🏅 MỞ KHÓA THÀNH TỰU 3 SAO MỚI!' : '🏅 Thành tựu 3 sao đã mở khóa'}
+                  </span>
+                  <h3 class="text-xl md:text-2xl font-extrabold text-slate-800">${res.stage.badge.name}</h3>
+                  <p class="text-xs md:text-sm text-slate-600 mt-0.5 mb-2.5">
+                    Quà thưởng hoàn thành thành tựu: <strong class="text-amber-700">+${badgeCoinReward} Xu</strong>
+                  </p>
+                  ${!isRewardClaimed ? `
+                    <button onclick="claimBadgeCoinReward('${res.stage.badge.id}')" class="btn-game btn-yellow px-5 py-2 rounded-xl text-sm md:text-base inline-flex items-center gap-1.5 animate-pulse">
+                      <span>🎁</span>
+                      <span>Nhận thêm +${badgeCoinReward} Xu thành tựu</span>
+                    </button>
+                  ` : `
+                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs md:text-sm border border-emerald-300">
+                      ✓ Đã nhận +${badgeCoinReward} Xu thưởng thành tựu
+                    </span>
+                  `}
+                </div>
+              </div>
+            ` : `
+              <div class="bg-amber-50 rounded-3xl p-4 border-2 border-amber-300 mb-6 flex flex-col sm:flex-row items-center gap-3.5">
+                ${getOwlMascotSVG(res.isPassed ? 'idle' : 'sad', 'w-20 h-20')}
+                <div class="text-center sm:text-left flex-1">
+                  <p class="font-game font-extrabold text-amber-900 text-base md:text-lg">
+                    🔒 Chưa mở khóa thành tựu "${res.stage.badge.name}"
+                  </p>
+                  <p class="text-xs md:text-sm text-slate-700 mt-1 leading-relaxed">
+                    ${res.isPassed
+                      ? `Bạn đã mở khóa chặng tiếp theo, nhưng cần đạt đủ <strong>3 sao (8/8 câu đúng)</strong> để nhận Huy hiệu và thưởng thêm <strong>+${badgeCoinReward} Xu</strong> thành tựu nhé!`
+                      : `Bạn cần ít nhất <strong>1 câu đúng</strong> để hoàn thành chặng và <strong>8/8 câu đúng (3 sao)</strong> để nhận Huy hiệu +${badgeCoinReward} Xu!`}
+                  </p>
+                </div>
+              </div>
+            `}
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+              <button onclick="startStageQuiz(${res.stage.id})" class="btn-game ${!hasBadge ? 'btn-sky' : 'btn-white'} px-6 py-3 rounded-2xl text-base md:text-lg">
+                🔄 ${!hasBadge ? 'Chơi lại để săn 3★' : 'Chơi lại chặng này'}
+              </button>
+              <button onclick="navigateTo('map')" class="btn-game btn-yellow px-8 py-3 rounded-2xl text-lg md:text-xl">
+                🗺️ Tiếp tục trên bản đồ
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderRushIntroScreen() {
+      if (!areAllMainStagesCompleted()) {
+        navigateTo('map');
+        return '';
+      }
+      const shieldCount = gameState.inventory.timeShield || 0;
+
+      return `
+        <div class="w-full max-w-2xl mx-auto text-center screen-fade-in my-auto">
+          <div class="bg-white/95 backdrop-blur-md rounded-[2.2rem] p-6 md:p-8 border-4 border-orange-400 shadow-2xl">
+            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-orange-100 text-orange-700 font-extrabold text-xs md:text-sm uppercase mb-2">
+              <span>⚡ CHẶNG BONUS ĐỈNH NÚI • ĐÃ MỞ KHÓA</span>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-600 to-rose-600 mb-2">
+              Đua Thời Gian – Time Rush 60s
+            </h2>
+            <p class="text-slate-600 text-sm md:text-base mb-5">
+              Chúc mừng bạn đã chinh phục cả 6 vùng đất! Hãy thử thách phản xạ tốc độ với kho 64 câu hỏi tổng hợp.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left mb-5">
+              <div class="bg-sky-50 border-2 border-sky-200 p-3.5 rounded-2xl flex items-start gap-3">
+                <span class="text-2xl">⏱️</span>
+                <div>
+                  <h4 class="font-bold text-sky-900 text-base">60 Giây Bùng Nổ</h4>
+                  <p class="text-xs text-slate-600">Trộn ngẫu nhiên 64 câu hỏi từ 6 chủ đề CNTT.</p>
+                </div>
+              </div>
+              <div class="bg-amber-50 border-2 border-amber-200 p-3.5 rounded-2xl flex items-start gap-3">
+                <span class="text-2xl">🔥</span>
+                <div>
+                  <h4 class="font-bold text-amber-900 text-base">Chuỗi Combo Nhân Điểm</h4>
+                  <p class="text-xs text-slate-600">Đúng liên tiếp tăng Combo cộng dồn điểm cực nhanh!</p>
+                </div>
+              </div>
+              <div class="bg-rose-50 border-2 border-rose-200 p-3.5 rounded-2xl flex items-start gap-3">
+                <span class="text-2xl">⚠️</span>
+                <div>
+                  <h4 class="font-bold text-rose-900 text-base">Phạt Thời Gian (-5s)</h4>
+                  <p class="text-xs text-slate-600">Trả lời sai bị trừ 5s và mất Combo (trừ khi dùng Khiên Thời Gian).</p>
+                </div>
+              </div>
+              <div class="bg-purple-50 border-2 border-purple-200 p-3.5 rounded-2xl flex items-start gap-3">
+                <span class="text-2xl">🏅</span>
+                <div>
+                  <h4 class="font-bold text-purple-900 text-base">Huy Hiệu & +${BONUS_SPEED_BADGE.coinReward} Xu Thành Tựu</h4>
+                  <p class="text-xs text-slate-600">Đạt từ <strong>60 điểm</strong> nhận huy hiệu <em>Bậc thầy Tốc độ</em> & +${BONUS_SPEED_BADGE.coinReward} Xu!</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-3 mb-5 flex items-center justify-between gap-2 text-xs md:text-sm">
+              <span>⏳ Bạn đang có <strong>${shieldCount} Khiên Thời Gian</strong> (tự động +10s khi bấm sử dụng trong trận).</span>
+              <button onclick="openShopModal('powerups')" class="font-bold text-emerald-700 underline flex-shrink-0">+ Mua thêm</button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+              <button onclick="navigateTo('map')" class="btn-game btn-white px-6 py-3 rounded-2xl text-base md:text-lg">← Quay lại bản đồ</button>
+              <button onclick="startTimeRush()" class="btn-game btn-yellow px-8 py-3.5 rounded-2xl text-xl">🚀 Bắt đầu đếm ngược 60s!</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function startTimeRush() {
+      playSound('fanfare');
+      rushState = {
+        timerId: null,
+        timeLeft: 60,
+        score: 0,
+        combo: 0,
+        maxCombo: 0,
+        correctCount: 0,
+        wrongCount: 0,
+        pool: shuffleArray(ALL_RUSH_QUESTIONS),
+        poolIndex: 0,
+        locked: false,
+        shieldActive: false,
+        lastResult: null
+      };
+      currentScreen = 'rush_play';
+      renderApp();
+
+      rushState.timerId = setInterval(() => {
+        rushState.timeLeft -= 1;
+        if (rushState.timeLeft <= 0) {
+          rushState.timeLeft = 0;
+          finishTimeRush();
+        } else {
+          updateRushTimerUI();
+        }
+      }, 1000);
+    }
+
+    function useTimeShieldInRush() {
+      if ((gameState.inventory.timeShield || 0) <= 0) {
+        playSound('wrong');
+        showToast("⚠️ Bạn không còn Khiên Thời Gian trong túi đồ!");
+        return;
+      }
+      gameState.inventory.timeShield -= 1;
+      saveGameState();
+      rushState.timeLeft = Math.min(99, rushState.timeLeft + 10);
+      rushState.shieldActive = true;
+      playSound('coin');
+      showFloatingBadge('rush-penalty-anchor', '+10s 🛡️', 'text-emerald-500 score-pop');
+      updateRushTimerUI();
+      renderApp();
+    }
+
+    function updateRushTimerUI() {
+      const timerEl = document.getElementById('rush-timer-text');
+      const barEl = document.getElementById('rush-timer-bar');
+      if (timerEl) {
+        timerEl.textContent = `${rushState.timeLeft}s`;
+        if (rushState.timeLeft <= 10) timerEl.classList.add('text-rose-400', 'animate-pulse');
+        else timerEl.classList.remove('text-rose-400', 'animate-pulse');
+      }
+      if (barEl) {
+        const pct = Math.max(0, Math.min(100, (rushState.timeLeft / 60) * 100));
+        barEl.style.width = `${pct}%`;
+        barEl.className = `h-full ${rushState.timeLeft <= 15 ? 'bg-rose-500' : 'bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500'} transition-all duration-300 rounded-full`;
+      }
+    }
+
+    function renderRushPlayScreen() {
+      const currentQ = rushState.pool[rushState.poolIndex % rushState.pool.length];
+      const comboMultiplier = Math.max(1, rushState.combo);
+      const optionLetters = ['A', 'B', 'C', 'D'];
+      const shieldCount = gameState.inventory.timeShield || 0;
+
+      return `
+        <div class="w-full max-w-3xl mx-auto flex-1 flex flex-col justify-center screen-fade-in">
+          <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 border-3 border-orange-300 shadow-lg mb-4 relative">
+            <div class="flex items-center justify-between gap-2 mb-2.5 flex-wrap">
+              <button onclick="navigateTo('map')" class="btn-game btn-white px-3 py-1 rounded-xl text-xs md:text-sm">✕ Thoát</button>
+
+              <div class="relative flex items-center gap-2 bg-slate-900 text-white px-4 py-1.5 rounded-2xl shadow-inner">
+                <span class="text-lg">⏱️</span>
+                <span id="rush-timer-text" class="font-game text-2xl font-extrabold ${rushState.timeLeft <= 10 ? 'text-rose-400 animate-pulse' : 'text-yellow-300'}">
+                  ${rushState.timeLeft}s
+                </span>
+                <div id="rush-penalty-anchor" class="absolute -bottom-6 right-0 pointer-events-none"></div>
+              </div>
+
+              <button onclick="useTimeShieldInRush()" ${shieldCount <= 0 ? 'disabled' : ''}
+                class="btn-game btn-emerald px-3 py-1 rounded-2xl text-xs md:text-sm flex items-center gap-1">
+                <span>⏳ +10s</span>
+                <span class="bg-white text-emerald-800 font-extrabold px-1.5 rounded-full text-xs">${shieldCount}</span>
+              </button>
+
+              <div class="flex items-center gap-2 relative">
+                <div class="px-3 py-1 rounded-2xl font-game font-extrabold text-sm md:text-base flex items-center gap-1
+                  ${rushState.combo >= 2 ? 'bg-gradient-to-r from-amber-400 to-rose-500 text-white shadow-md' : 'bg-slate-100 text-slate-600'}">
+                  <span>${rushState.combo >= 2 ? '🔥' : '⭐'}</span>
+                  <span>x${comboMultiplier}</span>
+                </div>
+                <div class="bg-purple-100 border-2 border-purple-300 px-3.5 py-1 rounded-2xl font-game font-extrabold text-purple-800 text-base md:text-lg">
+                  ${rushState.score}đ
+                </div>
+                <div id="rush-score-anchor" class="absolute -bottom-6 right-2 pointer-events-none"></div>
+              </div>
+            </div>
+
+            <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+              <div id="rush-timer-bar"
+                class="h-full ${rushState.timeLeft <= 15 ? 'bg-rose-500' : 'bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500'} transition-all duration-300 rounded-full"
+                style="width: ${Math.min(100, (rushState.timeLeft / 60) * 100)}%"></div>
+            </div>
+          </div>
+
+          <div class="bg-white/95 backdrop-blur-md rounded-[2rem] p-5 md:p-7 border-4 border-orange-300 shadow-xl">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 font-bold text-xs">
+                📌 ${currentQ.topic || 'Tổng hợp CNTT'}
+              </span>
+              <span class="text-xs font-bold text-slate-400">
+                ${rushState.shieldActive ? '🛡️ Khiên chống phạt đang bật!' : `Câu #${rushState.poolIndex + 1}`}
+              </span>
+            </div>
+
+            <h3 class="text-lg md:text-2xl font-bold text-slate-800 leading-snug mb-5">
+              ${currentQ.q}
+            </h3>
+
+            <div class="grid grid-cols-1 gap-3">
+              ${currentQ.options.map((opt, idx) => `
+                <button id="rush-opt-${idx}" onclick="answerTimeRush(${idx})"
+                  class="w-full text-left p-3.5 md:p-4 rounded-2xl border-3 bg-white hover:bg-amber-50 border-slate-200 text-slate-800 shadow-[0_4px_0_#CBD5E1] transition-all duration-100 flex items-center gap-3.5 cursor-pointer active:translate-y-1">
+                  <span class="w-9 h-9 rounded-xl bg-orange-100 text-orange-700 font-game font-extrabold text-base flex items-center justify-center flex-shrink-0">
+                    ${optionLetters[idx]}
+                  </span>
+                  <span class="font-medium text-sm md:text-base leading-snug flex-1">${opt}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function answerTimeRush(optionIdx) {
+      if (rushState.locked || rushState.timeLeft <= 0) return;
+      rushState.locked = true;
+
+      const currentQ = rushState.pool[rushState.poolIndex % rushState.pool.length];
+      const chosenBtn = document.getElementById(`rush-opt-${optionIdx}`);
+      const correctBtn = document.getElementById(`rush-opt-${currentQ.answer}`);
+
+      if (optionIdx === currentQ.answer) {
+        rushState.combo += 1;
+        if (rushState.combo > rushState.maxCombo) rushState.maxCombo = rushState.combo;
+        rushState.correctCount += 1;
+        const gained = 5 + (rushState.combo - 1) * 2;
+        rushState.score += gained;
+        playSound('correct');
+        if (chosenBtn) chosenBtn.className = "w-full text-left p-3.5 md:p-4 rounded-2xl border-3 bg-emerald-100 border-emerald-500 text-emerald-950 shadow-[0_4px_0_#059669] flex items-center gap-3.5";
+        showFloatingBadge('rush-score-anchor', `+${gained}đ`, 'text-emerald-600 score-pop');
+      } else {
+        rushState.combo = 0;
+        rushState.wrongCount += 1;
+        playSound('wrong');
+        if (rushState.shieldActive) {
+          rushState.shieldActive = false;
+          showFloatingBadge('rush-penalty-anchor', '🛡️ Đỡ phạt!', 'text-sky-500 score-pop');
+        } else {
+          rushState.timeLeft = Math.max(0, rushState.timeLeft - 5);
+          showFloatingBadge('rush-penalty-anchor', '-5s', 'text-rose-600 penalty-pop');
+        }
+        if (chosenBtn) chosenBtn.className = "w-full text-left p-3.5 md:p-4 rounded-2xl border-3 bg-rose-100 border-rose-500 text-rose-950 shadow-[0_4px_0_#E11D48] flex items-center gap-3.5";
+        if (correctBtn) correctBtn.className = "w-full text-left p-3.5 md:p-4 rounded-2xl border-3 bg-emerald-50 border-emerald-400 text-emerald-900 flex items-center gap-3.5";
+        updateRushTimerUI();
+      }
+
+      setTimeout(() => {
+        if (rushState.timeLeft <= 0) {
+          finishTimeRush();
+          return;
+        }
+        rushState.poolIndex += 1;
+        if (rushState.poolIndex % rushState.pool.length === 0) {
+          rushState.pool = shuffleArray(ALL_RUSH_QUESTIONS);
+        }
+        rushState.locked = false;
+        if (currentScreen === 'rush_play') renderApp();
+      }, 420);
+    }
+
+    function showFloatingBadge(anchorId, text, extraClasses) {
+      const anchor = document.getElementById(anchorId);
+      if (!anchor) return;
+      const el = document.createElement('div');
+      el.className = `font-game font-extrabold text-xl md:text-2xl drop-shadow-sm whitespace-nowrap ${extraClasses}`;
+      el.textContent = text;
+      anchor.appendChild(el);
+      setTimeout(() => el.remove(), 1100);
+    }
+
+    function finishTimeRush() {
+      if (rushState.timerId) {
+        clearInterval(rushState.timerId);
+        rushState.timerId = null;
+      }
+      const finalScore = rushState.score;
+      const earnedCoins = finalScore * 2;
+      gameState.coins += earnedCoins;
+
+      const isNewRecord = finalScore > gameState.rushHighScore;
+      if (isNewRecord) gameState.rushHighScore = finalScore;
+
+      let unlockedSpeedBadge = false;
+      if (finalScore >= 60 && !gameState.badges[BONUS_SPEED_BADGE.id]) {
+        gameState.badges[BONUS_SPEED_BADGE.id] = formatTodayDate();
+        unlockedSpeedBadge = true;
+      }
+      saveGameState();
+
+      rushState.lastResult = {
+        finalScore,
+        earnedCoins,
+        isNewRecord,
+        unlockedSpeedBadge,
+        hasSpeedBadge: Boolean(gameState.badges[BONUS_SPEED_BADGE.id]),
+        maxCombo: rushState.maxCombo,
+        correctCount: rushState.correctCount,
+        wrongCount: rushState.wrongCount
+      };
+
+      currentScreen = 'rush_complete';
+      renderApp();
+      playSound('fanfare');
+      if (finalScore > 0) launchConfetti();
+    }
+
+    function renderRushCompleteScreen() {
+      const res = rushState.lastResult;
+      if (!res) return renderMapScreen();
+
+      const hasSpeedBadge = Boolean(gameState.badges[BONUS_SPEED_BADGE.id]);
+      const isSpeedRewardClaimed = Boolean(gameState.claimedBadgeRewards[BONUS_SPEED_BADGE.id]);
+
+      return `
+        <div class="w-full max-w-2xl mx-auto text-center screen-fade-in my-auto">
+          <div class="bg-white/95 backdrop-blur-md rounded-[2.2rem] p-6 md:p-8 border-4 border-amber-400 shadow-2xl">
+            <span class="inline-block px-4 py-1 rounded-full bg-orange-100 text-orange-700 font-extrabold text-xs md:text-sm uppercase mb-2">
+              ⏱️ HẾT GIỜ! TỔNG KẾT ĐUA THỜI GIAN
+            </span>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-purple-800 mb-1">
+              ${res.isNewRecord && res.finalScore > 0 ? '🏆 Kỷ Lục Mới Đã Được Thiết Lập!' : '⚡ Hoàn Thành Thử Thách Tốc Độ!'}
+            </h2>
+
+            <div class="grid grid-cols-3 gap-2.5 md:gap-4 my-5">
+              <div class="bg-purple-50 border-2 border-purple-200 p-3 rounded-2xl">
+                <span class="text-xs text-slate-500 block font-semibold">Tổng điểm</span>
+                <span class="font-game text-2xl md:text-3xl font-extrabold text-purple-700">${res.finalScore}đ</span>
+              </div>
+              <div class="bg-amber-50 border-2 border-amber-300 p-3 rounded-2xl">
+                <span class="text-xs text-slate-500 block font-semibold">Xu thưởng (x2)</span>
+                <span class="font-game text-2xl md:text-3xl font-extrabold text-amber-600">+${res.earnedCoins} 🪙</span>
+              </div>
+              <div class="bg-rose-50 border-2 border-rose-200 p-3 rounded-2xl">
+                <span class="text-xs text-slate-500 block font-semibold">Combo tối đa</span>
+                <span class="font-game text-2xl md:text-3xl font-extrabold text-rose-600">🔥 x${Math.max(1, res.maxCombo)}</span>
+              </div>
+            </div>
+
+            <p class="text-xs md:text-sm text-slate-500 mb-5">
+              Đúng <strong class="text-emerald-600">${res.correctCount} câu</strong> • Sai <strong class="text-rose-500">${res.wrongCount} câu</strong> • Kỷ lục: <strong class="text-orange-600">${gameState.rushHighScore} điểm</strong>
+            </p>
+
+            ${hasSpeedBadge ? `
+              <div class="bg-gradient-to-r from-amber-50 via-orange-50 to-rose-50 rounded-3xl p-4 border-2 border-amber-400 mb-6 flex flex-col sm:flex-row items-center gap-4">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br ${BONUS_SPEED_BADGE.color} text-white text-4xl flex items-center justify-center shadow-lg border-2 border-white flex-shrink-0">
+                  ${BONUS_SPEED_BADGE.icon}
+                </div>
+                <div class="text-center sm:text-left flex-1">
+                  <span class="text-xs font-extrabold uppercase text-orange-600">
+                    ${res.unlockedSpeedBadge ? '🎉 Thành tựu đặc biệt mới mở khóa!' : '🏅 Thành tựu đặc biệt đã mở khóa'}
+                  </span>
+                  <h3 class="text-xl md:text-2xl font-extrabold text-slate-800">${BONUS_SPEED_BADGE.name}</h3>
+                  <p class="text-xs md:text-sm text-slate-600 mb-2">Chúc mừng bạn đã đạt từ 60 điểm trở lên trong Đua thời gian 60s!</p>
+                  ${!isSpeedRewardClaimed ? `
+                    <button onclick="claimBadgeCoinReward('${BONUS_SPEED_BADGE.id}')" class="btn-game btn-yellow px-4 py-1.5 rounded-xl text-sm inline-flex items-center gap-1.5 animate-pulse">
+                      <span>🎁</span>
+                      <span>Nhận thêm +${BONUS_SPEED_BADGE.coinReward} Xu thành tựu</span>
+                    </button>
+                  ` : `
+                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300">
+                      ✓ Đã nhận +${BONUS_SPEED_BADGE.coinReward} Xu thưởng thành tựu
+                    </span>
+                  `}
+                </div>
+              </div>
+            ` : `
+              <div class="bg-sky-50 rounded-2xl p-3.5 border-2 border-sky-200 mb-6 text-xs md:text-sm text-slate-700">
+                💡 <strong>Mục tiêu:</strong> Đạt từ <strong>60 điểm</strong> trở lên trong Đua thời gian để nhận huy hiệu <strong>"${BONUS_SPEED_BADGE.name}"</strong> và thưởng thêm <strong>+${BONUS_SPEED_BADGE.coinReward} Xu</strong> nhé!
+              </div>
+            `}
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+              <button onclick="startTimeRush()" class="btn-game btn-yellow px-6 py-3 rounded-2xl text-lg">⚡ Đua lại lần nữa</button>
+              <button onclick="navigateTo('map')" class="btn-game btn-purple px-7 py-3 rounded-2xl text-lg">🗺️ Về bản đồ hành trình</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    let activeShopTab = 'powerups';
+    let activeMiniGameView = 'hub';
+
+    let memoryGame = {
+      cards: [],
+      flipped: [],
+      matchedPairIds: [],
+      moves: 0,
+      seconds: 0,
+      timerId: null,
+      locked: false,
+      completed: false
+    };
+
+    let wheelGame = {
+      spinning: false,
+      currentRotation: 0,
+      lastPrizeText: ""
+    };
+
+    function openShopModal(defaultTab = 'powerups') {
+      playSound('click');
+      activeShopTab = defaultTab;
+      if (defaultTab !== 'minigames') {
+        stopMemoryTimer();
+      }
+      const modal = document.getElementById('shop-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      renderShopContent();
+    }
+
+    function closeShopModal() {
+      playSound('click');
+      stopMemoryTimer();
+      const modal = document.getElementById('shop-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      renderApp();
+    }
+
+    function switchShopTab(tab) {
+      playSound('click');
+      activeShopTab = tab;
+      if (tab === 'minigames') {
+        activeMiniGameView = 'hub';
+      } else {
+        stopMemoryTimer();
+      }
+      renderShopContent();
+    }
+
+    function renderShopContent() {
+      const balEl = document.getElementById('shop-coin-balance');
+      if (balEl) balEl.textContent = `${gameState.coins} Xu`;
+
+      ['powerups', 'wardrobe', 'minigames'].forEach(t => {
+        const btn = document.getElementById(`shop-tab-btn-${t}`);
+        if (!btn) return;
+        if (t === activeShopTab) {
+          btn.className = "font-game font-extrabold text-xs sm:text-sm md:text-base py-2 px-2 rounded-xl transition flex items-center justify-center gap-1.5 bg-purple-600 text-white shadow-md";
+        } else {
+          btn.className = "font-game font-bold text-xs sm:text-sm md:text-base py-2 px-2 rounded-xl transition flex items-center justify-center gap-1.5 text-slate-600 hover:bg-white";
+        }
+      });
+
+      const container = document.getElementById('shop-tab-content');
+      if (!container) return;
+
+      if (activeShopTab === 'powerups') {
+        container.innerHTML = renderShopPowerupsTab();
+      } else if (activeShopTab === 'wardrobe') {
+        container.innerHTML = renderShopWardrobeTab();
+      } else {
+        container.innerHTML = renderShopMiniGamesTab();
+      }
+    }
+
+    function renderShopPowerupsTab() {
+      return `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-1">
+          ${SHOP_POWERUPS.map(item => {
+            const count = gameState.inventory[item.id] || 0;
+            const canAfford = gameState.coins >= item.price;
+            return `
+              <div class="bg-white rounded-3xl p-4 border-3 border-sky-200 shadow-md flex flex-col justify-between text-center">
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 font-bold text-xs">
+                      Đang có: ${count}
+                    </span>
+                    <span class="font-game font-extrabold text-amber-600 text-base">
+                      ${item.price} 🪙
+                    </span>
+                  </div>
+                  <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${item.color} text-white text-3xl flex items-center justify-center shadow-md mb-3">
+                    ${item.icon}
+                  </div>
+                  <h4 class="text-lg font-extrabold text-slate-800 mb-1">${item.name}</h4>
+                  <p class="text-xs text-slate-600 leading-relaxed mb-4">${item.desc}</p>
+                </div>
+                <button onclick="buyPowerup('${item.id}')" ${!canAfford ? 'disabled' : ''}
+                  class="btn-game ${canAfford ? 'btn-yellow' : 'btn-white'} w-full py-2.5 rounded-2xl text-base">
+                  ${canAfford ? `Mua ngay (${item.price} Xu)` : 'Không đủ Xu'}
+                </button>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function buyPowerup(itemId) {
+      const item = SHOP_POWERUPS.find(p => p.id === itemId);
+      if (!item || gameState.coins < item.price) {
+        playSound('wrong');
+        return;
+      }
+      gameState.coins -= item.price;
+      gameState.inventory[itemId] = (gameState.inventory[itemId] || 0) + 1;
+      saveGameState();
+      playSound('coin');
+      showToast(`🎉 Đã mua thành công 1 ${item.name}!`);
+      renderShopContent();
+    }
+
+    function renderShopWardrobeTab() {
+      return `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-1">
+          ${OWL_OUTFITS.map(outfit => {
+            const owned = gameState.ownedOutfits.includes(outfit.id);
+            const equipped = gameState.equippedOutfit === outfit.id;
+            const canAfford = gameState.coins >= outfit.price;
+
+            return `
+              <div class="bg-white rounded-3xl p-4 border-3 ${equipped ? 'border-amber-400 bg-amber-50/40' : 'border-purple-200'} shadow-md flex items-center gap-4">
+                <div class="bg-sky-50 rounded-2xl p-2 border border-sky-200 flex-shrink-0">
+                  ${getOwlMascotSVG('idle', 'w-20 h-20', outfit.id)}
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-1">
+                    <h4 class="font-extrabold text-base md:text-lg text-slate-800 truncate">${outfit.name}</h4>
+                  </div>
+                  <p class="text-xs text-slate-600 mt-0.5 mb-3 leading-snug">${outfit.desc}</p>
+                  ${equipped
+                    ? `<span class="inline-block w-full text-center py-2 rounded-xl bg-emerald-100 text-emerald-800 font-game font-extrabold text-sm border border-emerald-300">✓ Đang trang bị</span>`
+                    : owned
+                    ? `<button onclick="equipOwlOutfit('${outfit.id}')" class="btn-game btn-purple w-full py-2 rounded-xl text-sm">Mặc trang phục</button>`
+                    : `<button onclick="buyOwlOutfit('${outfit.id}')" ${!canAfford ? 'disabled' : ''} class="btn-game ${canAfford ? 'btn-yellow' : 'btn-white'} w-full py-2 rounded-xl text-sm">
+                        Mở khóa (${outfit.price} 🪙)
+                      </button>`
+                  }
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function buyOwlOutfit(outfitId) {
+      const outfit = OWL_OUTFITS.find(o => o.id === outfitId);
+      if (!outfit || gameState.coins < outfit.price) {
+        playSound('wrong');
+        return;
+      }
+      gameState.coins -= outfit.price;
+      if (!gameState.ownedOutfits.includes(outfitId)) {
+        gameState.ownedOutfits.push(outfitId);
+      }
+      gameState.equippedOutfit = outfitId;
+      saveGameState();
+      playSound('fanfare');
+      showToast(`🦉 Chú Cú đã khoác lên mình "${outfit.name}"!`);
+      renderShopContent();
+    }
+
+    function equipOwlOutfit(outfitId) {
+      playSound('click');
+      gameState.equippedOutfit = outfitId;
+      saveGameState();
+      renderShopContent();
+    }
+
+    function renderShopMiniGamesTab() {
+      if (activeMiniGameView === 'memory') return renderMemoryMatchView();
+      if (activeMiniGameView === 'wheel') return renderKnowledgeWheelView();
+
+      const hasMemBadge = Boolean(gameState.badges[MEMORY_MASTER_BADGE.id]);
+
+      return `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-1">
+
+          <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl p-5 border-3 border-purple-300 shadow-md flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-3 py-0.5 rounded-full bg-purple-200 text-purple-800 font-extrabold text-xs">MIỄN PHÍ LƯỢT CHƠI</span>
+                ${hasMemBadge ? `<span class="text-xs font-extrabold text-emerald-700">🏅 Đã mở khóa Huy hiệu</span>` : `<span class="text-xs font-bold text-amber-700">🎁 +35 Xu & +${MEMORY_MASTER_BADGE.coinReward} Xu thành tựu</span>`}
+              </div>
+              <div class="text-4xl mb-2">🃏</div>
+              <h3 class="text-xl md:text-2xl font-extrabold text-purple-900 mb-1">Ghép Cặp Thuật Ngữ</h3>
+              <p class="text-xs md:text-sm text-slate-600 leading-relaxed mb-4">
+                Lật mở 12 thẻ bài (6 cặp Thuật ngữ CNTT ↔ Định nghĩa). Hoàn thành để nhận ngay <strong>+35 Xu</strong> và mở khóa Huy hiệu <em>"Nhà Thông Thái Lật Thẻ"</em> (+${MEMORY_MASTER_BADGE.coinReward} Xu thành tựu)!
+              </p>
+            </div>
+            <button onclick="startMemoryMatchGame()" class="btn-game btn-purple w-full py-3 rounded-2xl text-lg">
+              🎮 Chơi Ghép Thẻ Ngay
+            </button>
+          </div>
+
+          <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl p-5 border-3 border-amber-300 shadow-md flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-3 py-0.5 rounded-full bg-amber-200 text-amber-900 font-extrabold text-xs">20 XU / LƯỢT QUAY</span>
+                <span class="text-xs font-bold text-rose-600">🎰 Trúng tới +50 Xu!</span>
+              </div>
+              <div class="text-4xl mb-2">🎡</div>
+              <h3 class="text-xl md:text-2xl font-extrabold text-amber-900 mb-1">Vòng Quay Tri Thức</h3>
+              <p class="text-xs md:text-sm text-slate-600 leading-relaxed mb-4">
+                Dùng <strong>20 Xu</strong> để quay bánh xe may mắn nhận Xu thưởng (+10, +30, +50 Xu), vật phẩm trợ giúp miễn phí hoặc thử thách <strong>Đố nhanh x2 thưởng</strong>!
+              </p>
+            </div>
+            <button onclick="openKnowledgeWheel()" class="btn-game btn-yellow w-full py-3 rounded-2xl text-lg">
+              🎡 Mở Vòng Quay Tri Thức
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function stopMemoryTimer() {
+      if (memoryGame.timerId) {
+        clearInterval(memoryGame.timerId);
+        memoryGame.timerId = null;
+      }
+    }
+
+    function startMemoryMatchGame() {
+      playSound('click');
+      stopMemoryTimer();
+      const rawCards = [];
+      MEMORY_PAIRS.forEach(p => {
+        rawCards.push({ uid: `t_${p.pairId}`, pairId: p.pairId, type: 'term', text: p.term });
+        rawCards.push({ uid: `d_${p.pairId}`, pairId: p.pairId, type: 'def', text: p.def });
+      });
+
+      memoryGame = {
+        cards: shuffleArray(rawCards),
+        flipped: [],
+        matchedPairIds: [],
+        moves: 0,
+        seconds: 0,
+        timerId: null,
+        locked: false,
+        completed: false
+      };
+
+      activeMiniGameView = 'memory';
+      renderShopContent();
+
+      memoryGame.timerId = setInterval(() => {
+        memoryGame.seconds += 1;
+        const tEl = document.getElementById('mem-timer-val');
+        if (tEl) tEl.textContent = `${memoryGame.seconds}s`;
+      }, 1000);
+    }
+
+    function renderMemoryMatchView() {
+      const isMemRewardClaimed = Boolean(gameState.claimedBadgeRewards[MEMORY_MASTER_BADGE.id]);
+
+      return `
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3 bg-purple-50 p-3 rounded-2xl border border-purple-200">
+            <button onclick="stopMemoryTimer(); activeMiniGameView='hub'; renderShopContent();" class="btn-game btn-white px-3 py-1 rounded-xl text-xs md:text-sm">
+              ← Quay lại Mini-Game
+            </button>
+            <div class="flex items-center gap-3 font-game font-bold text-sm md:text-base">
+              <span class="text-purple-700">🔄 Lượt lật: ${memoryGame.moves}</span>
+              <span class="text-sky-700">⏱️ Thời gian: <span id="mem-timer-val">${memoryGame.seconds}s</span></span>
+              <span class="text-emerald-700">✅ Đã ghép: ${memoryGame.matchedPairIds.length}/6</span>
+            </div>
+            <button onclick="startMemoryMatchGame()" class="btn-game btn-sky px-3 py-1 rounded-xl text-xs">Chơi lại</button>
+          </div>
+
+          ${memoryGame.completed ? `
+            <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border-3 border-emerald-400 rounded-3xl p-5 text-center mb-3 screen-fade-in">
+              <div class="text-4xl mb-1">🎉🃏🏆</div>
+              <h4 class="text-2xl font-extrabold text-emerald-800">Tuyệt vời! Bạn đã ghép đúng toàn bộ 6 cặp!</h4>
+              <p class="text-sm text-slate-700 mt-1 mb-3">
+                Hoàn thành sau <strong>${memoryGame.moves} lượt lật</strong> trong <strong>${memoryGame.seconds} giây</strong>.
+                Bạn nhận được <strong>+35 Xu</strong> và mở khóa Huy hiệu <strong>"Nhà Thông Thái Lật Thẻ"</strong>!
+              </p>
+              ${!isMemRewardClaimed ? `
+                <button onclick="claimBadgeCoinReward('${MEMORY_MASTER_BADGE.id}'); renderShopContent();" class="btn-game btn-yellow px-5 py-2 rounded-xl text-sm md:text-base inline-flex items-center gap-1.5 animate-pulse">
+                  <span>🎁</span>
+                  <span>Nhận thêm +${MEMORY_MASTER_BADGE.coinReward} Xu thành tựu</span>
+                </button>
+              ` : `
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300">
+                  ✓ Đã nhận +${MEMORY_MASTER_BADGE.coinReward} Xu thưởng thành tựu
+                </span>
+              `}
+            </div>
+          ` : ''}
+
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
+            ${memoryGame.cards.map((card, idx) => {
+              const isMatched = memoryGame.matchedPairIds.includes(card.pairId);
+              const isFlipped = memoryGame.flipped.includes(idx) || isMatched;
+
+              if (!isFlipped) {
+                return `
+                  <button onclick="flipMemoryCard(${idx})"
+                    class="memory-card h-24 sm:h-28 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-700 border-3 border-purple-300 shadow-md flex flex-col items-center justify-center text-white cursor-pointer">
+                    <span class="text-2xl">🦉</span>
+                    <span class="font-game text-xs opacity-80 mt-0.5">Thẻ #${idx + 1}</span>
+                  </button>
+                `;
+              }
+
+              return `
+                <div class="memory-card matched h-24 sm:h-28 rounded-2xl p-2 border-3 flex flex-col items-center justify-center text-center shadow-inner
+                  ${isMatched ? 'bg-emerald-50 border-emerald-500 text-emerald-950' : (card.type === 'term' ? 'bg-amber-50 border-amber-400 text-amber-950' : 'bg-sky-50 border-sky-400 text-sky-950')}">
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider px-1.5 py-0.2 rounded mb-1
+                    ${card.type === 'term' ? 'bg-amber-200 text-amber-900' : 'bg-sky-200 text-sky-900'}">
+                    ${card.type === 'term' ? 'Thuật ngữ' : 'Định nghĩa'}
+                  </span>
+                  <span class="${card.type === 'term' ? 'font-game font-extrabold text-base md:text-lg' : 'font-semibold text-[11px] sm:text-xs leading-tight'}">
+                    ${card.text}
+                  </span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function flipMemoryCard(idx) {
+      if (memoryGame.locked || memoryGame.completed) return;
+      const card = memoryGame.cards[idx];
+      if (memoryGame.matchedPairIds.includes(card.pairId) || memoryGame.flipped.includes(idx)) return;
+
+      playSound('click');
+      memoryGame.flipped.push(idx);
+      renderShopContent();
+
+      if (memoryGame.flipped.length === 2) {
+        memoryGame.moves += 1;
+        memoryGame.locked = true;
+        const [i1, i2] = memoryGame.flipped;
+        const c1 = memoryGame.cards[i1];
+        const c2 = memoryGame.cards[i2];
+
+        if (c1.pairId === c2.pairId) {
+          playSound('correct');
+          memoryGame.matchedPairIds.push(c1.pairId);
+          memoryGame.flipped = [];
+          memoryGame.locked = false;
+
+          if (memoryGame.matchedPairIds.length === MEMORY_PAIRS.length) {
+            stopMemoryTimer();
+            memoryGame.completed = true;
+            gameState.coins += 35;
+            if (!gameState.badges[MEMORY_MASTER_BADGE.id]) {
+              gameState.badges[MEMORY_MASTER_BADGE.id] = formatTodayDate();
+            }
+            saveGameState();
+            playSound('fanfare');
+            launchConfetti();
+          }
+          renderShopContent();
+        } else {
+          setTimeout(() => {
+            memoryGame.flipped = [];
+            memoryGame.locked = false;
+            renderShopContent();
+          }, 800);
+        }
+      }
+    }
+
+    const WHEEL_SEGMENTS = [
+      { label: "+50 Xu", color: "#F59E0B", type: "coins", value: 50 },
+      { label: "50:50 Free", color: "#0284C7", type: "item", item: "fiftyFifty", name: "Trợ giúp 50:50" },
+      { label: "Đố Nhanh x2", color: "#7C3AED", type: "quiz", value: 40 },
+      { label: "+10 Xu", color: "#10B981", type: "coins", value: 10 },
+      { label: "Khiên Free", color: "#EC4899", type: "item", item: "timeShield", name: "Khiên Thời Gian" },
+      { label: "+30 Xu", color: "#EA580C", type: "coins", value: 30 }
+    ];
+
+    function openKnowledgeWheel() {
+      playSound('click');
+      activeMiniGameView = 'wheel';
+      wheelGame.spinning = false;
+      renderShopContent();
+    }
+
+    function renderKnowledgeWheelView() {
+      const canSpin = gameState.coins >= 20 && !wheelGame.spinning;
+      const conicStops = WHEEL_SEGMENTS.map((s, i) => `${s.color} ${i * 60}deg ${(i + 1) * 60}deg`).join(', ');
+
+      return `
+        <div class="text-center">
+          <div class="flex items-center justify-between mb-3">
+            <button onclick="activeMiniGameView='hub'; renderShopContent();" class="btn-game btn-white px-3 py-1 rounded-xl text-xs md:text-sm">
+              ← Quay lại Mini-Game
+            </button>
+            <span class="font-game font-bold text-amber-700 text-sm">Chi phí: 20 Xu / lượt</span>
+          </div>
+
+          <div class="relative w-60 h-60 sm:w-68 sm:h-68 mx-auto my-3">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-20 text-3xl drop-shadow-md">🔻</div>
+
+            <div id="knowledge-wheel-disc"
+              style="background: conic-gradient(${conicStops}); transform: rotate(${wheelGame.currentRotation}deg); transition: transform 3.2s cubic-bezier(0.15, 0.85, 0.2, 1);"
+              class="w-full h-full rounded-full border-8 border-white shadow-[0_10px_25px_rgba(0,0,0,0.25)] relative overflow-hidden">
+              ${WHEEL_SEGMENTS.map((seg, i) => {
+                const angle = i * 60 + 30;
+                return `
+                  <div style="transform: rotate(${angle}deg);"
+                    class="absolute inset-0 flex justify-center pt-5 pointer-events-none">
+                    <span class="font-game font-extrabold text-white text-xs sm:text-sm drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                      ${seg.label}
+                    </span>
+                  </div>
+                `;
+              }).join('')}
+              <div class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-white border-4 border-amber-400 shadow-inner flex items-center justify-center text-2xl">
+                🦉
+              </div>
+            </div>
+          </div>
+
+          ${wheelGame.lastPrizeText ? `
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl px-4 py-2.5 max-w-md mx-auto mb-3 font-game font-bold text-amber-900 text-sm md:text-base">
+              ${wheelGame.lastPrizeText}
+            </div>
+          ` : ''}
+
+          <button onclick="spinKnowledgeWheel()" ${!canSpin ? 'disabled' : ''}
+            class="btn-game ${canSpin ? 'btn-yellow' : 'btn-white'} px-8 py-3 rounded-2xl text-lg md:text-xl">
+            ${wheelGame.spinning ? '🎡 Đang quay...' : (gameState.coins >= 20 ? '🎡 Quay Ngay (20 Xu)' : 'Không đủ 20 Xu')}
+          </button>
+        </div>
+      `;
+    }
+
+    function spinKnowledgeWheel() {
+      if (wheelGame.spinning || gameState.coins < 20) return;
+      gameState.coins -= 20;
+      saveGameState();
+      wheelGame.spinning = true;
+      wheelGame.lastPrizeText = "";
+      playSound('click');
+
+      const chosenIdx = Math.floor(Math.random() * WHEEL_SEGMENTS.length);
+      const targetCenter = chosenIdx * 60 + 30;
+      const desiredMod = (360 - targetCenter) % 360;
+      const currentMod = ((wheelGame.currentRotation % 360) + 360) % 360;
+      const delta = (desiredMod - currentMod + 360) % 360;
+      wheelGame.currentRotation += 1440 + delta;
+
+      renderShopContent();
+
+      setTimeout(() => {
+        wheelGame.spinning = false;
+        const prize = WHEEL_SEGMENTS[chosenIdx];
+        if (prize.type === 'coins') {
+          gameState.coins += prize.value;
+          wheelGame.lastPrizeText = `🎉 Chúc mừng! Bạn trúng thưởng +${prize.value} Xu!`;
+          playSound('fanfare');
+        } else if (prize.type === 'item') {
+          gameState.inventory[prize.item] = (gameState.inventory[prize.item] || 0) + 1;
+          wheelGame.lastPrizeText = `🎁 Tuyệt vời! Bạn nhận miễn phí 1 ${prize.name}!`;
+          playSound('fanfare');
+        } else if (prize.type === 'quiz') {
+          wheelGame.lastPrizeText = `⚡ Thử thách Đố Nhanh x2 Thưởng (+40 Xu nếu trả lời đúng)!`;
+          playSound('coin');
+          openWheelBonusQuiz();
+        }
+        saveGameState();
+        renderShopContent();
+      }, 3300);
+    }
+
+    function openWheelBonusQuiz() {
+      const q = ALL_RUSH_QUESTIONS[Math.floor(Math.random() * ALL_RUSH_QUESTIONS.length)];
+      const modal = document.getElementById('wheel-quiz-modal');
+      const box = document.getElementById('wheel-quiz-box');
+      if (!modal || !box) return;
+
+      const letters = ['A', 'B', 'C', 'D'];
+      box.innerHTML = `
+        <div class="text-center mb-3">
+          <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 font-extrabold text-xs">⚡ CÂU HỎI ĐỐ NHANH • THƯỞNG +40 XU</span>
+          <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2">${q.q}</h3>
+        </div>
+        <div class="flex flex-col gap-2.5">
+          ${q.options.map((opt, i) => `
+            <button onclick="answerWheelBonusQuiz(${i}, ${q.answer})"
+              class="w-full text-left p-3 rounded-2xl border-2 border-slate-200 hover:bg-amber-50 font-medium text-sm flex items-center gap-3">
+              <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 font-game font-extrabold flex items-center justify-center">${letters[i]}</span>
+              <span>${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function answerWheelBonusQuiz(chosen, correct) {
+      const modal = document.getElementById('wheel-quiz-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+
+      if (chosen === correct) {
+        gameState.coins += 40;
+        saveGameState();
+        playSound('fanfare');
+        launchConfetti();
+        wheelGame.lastPrizeText = "🏆 Xuất sắc! Bạn trả lời đúng và nhận ngay +40 Xu!";
+      } else {
+        playSound('wrong');
+        wheelGame.lastPrizeText = "😅 Tiếc quá, chưa chính xác rồi! Chúc bạn may mắn ở lượt quay sau.";
+      }
+      renderShopContent();
+    }
+
+    function openBadgesModal(silent = false) {
+      if (!silent) playSound('click');
+      const modal = document.getElementById('badges-modal');
+      const statsContainer = document.getElementById('badges-summary-stats');
+      const claimAllBar = document.getElementById('badges-claim-all-bar');
+      const gridContainer = document.getElementById('badges-grid');
+
+      const totalScore = getTotalScore();
+      const totalStars = getTotalStars();
+      const unlockedCount = Object.keys(gameState.badges).length;
+      const unclaimed = getUnclaimedBadgeRewards();
+      const totalUnclaimedCoins = unclaimed.reduce((sum, b) => sum + (b.coinReward || 30), 0);
+
+      statsContainer.innerHTML = `
+        <div class="bg-sky-100/80 border-2 border-sky-300 rounded-2xl p-2.5 text-center">
+          <span class="text-xs text-sky-800 font-bold block">Tổng điểm</span>
+          <span class="font-game text-xl md:text-2xl font-extrabold text-sky-700">${totalScore}/240</span>
+        </div>
+        <div class="bg-amber-100/80 border-2 border-amber-300 rounded-2xl p-2.5 text-center">
+          <span class="text-xs text-amber-800 font-bold block">Tổng sao</span>
+          <span class="font-game text-xl md:text-2xl font-extrabold text-amber-600">${totalStars}/18 ⭐</span>
+        </div>
+        <div class="bg-yellow-100/80 border-2 border-yellow-300 rounded-2xl p-2.5 text-center">
+          <span class="text-xs text-yellow-800 font-bold block">Xu tích lũy</span>
+          <span class="font-game text-xl md:text-2xl font-extrabold text-amber-700">${gameState.coins} 🪙</span>
+        </div>
+        <div class="bg-purple-100/80 border-2 border-purple-300 rounded-2xl p-2.5 text-center">
+          <span class="text-xs text-purple-800 font-bold block">Huy hiệu</span>
+          <span class="font-game text-xl md:text-2xl font-extrabold text-purple-700">${unlockedCount}/8 🏅</span>
+        </div>
+      `;
+
+      if (claimAllBar) {
+        if (unclaimed.length > 0) {
+          claimAllBar.innerHTML = `
+            <div class="bg-gradient-to-r from-amber-100 via-yellow-100 to-amber-100 border-2 border-amber-400 rounded-2xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+              <div class="text-xs md:text-sm text-amber-950 font-semibold text-center sm:text-left">
+                🎁 Bạn có <strong>${unclaimed.length} thành tựu</strong> đã hoàn thành đang chờ nhận tổng cộng <strong class="text-amber-800">+${totalUnclaimedCoins} Xu</strong>!
+              </div>
+              <button onclick="claimAllBadgeCoinRewards()" class="btn-game btn-yellow px-4 py-1.5 rounded-xl text-sm flex-shrink-0">
+                ✨ Nhận tất cả (+${totalUnclaimedCoins} Xu)
+              </button>
+            </div>
+          `;
+        } else {
+          claimAllBar.innerHTML = '';
+        }
+      }
+
+      const allBadges = getAllBadgesList();
+
+      gridContainer.innerHTML = allBadges.map(badge => {
+        const earnedDate = gameState.badges[badge.id];
+        const isEarned = Boolean(earnedDate);
+        const isClaimed = Boolean(gameState.claimedBadgeRewards[badge.id]);
+        const reward = badge.coinReward || 30;
+
+        return `
+          <div class="rounded-2xl p-3.5 border-3 flex flex-col items-center justify-between text-center transition-all
+            ${isEarned ? 'bg-white border-amber-300 shadow-md' : 'bg-slate-100/90 border-slate-200 opacity-80'}">
+            <div class="w-full flex flex-col items-center">
+              <div class="w-full flex items-center justify-between mb-1.5">
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-extrabold ${isEarned ? 'bg-amber-100 text-amber-800' : 'bg-slate-200 text-slate-600'}">
+                  +${reward} 🪙
+                </span>
+                ${isEarned ? `<span class="text-[11px] font-bold text-emerald-700">${earnedDate}</span>` : `<span class="text-[11px] text-slate-400">Chưa mở</span>`}
+              </div>
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-2 shadow-inner border-2
+                ${isEarned ? `bg-gradient-to-br ${badge.color} text-white border-white` : 'bg-slate-200 text-slate-400 border-slate-300 grayscale'}">
+                ${isEarned ? badge.icon : '❓'}
+              </div>
+              <h4 class="font-game font-extrabold text-base md:text-lg ${isEarned ? 'text-slate-800' : 'text-slate-500'}">
+                ${badge.name}
+              </h4>
+              <p class="mt-1 text-xs text-slate-500 leading-snug mb-3">
+                ${isEarned ? '✓ Đã hoàn thành thành tựu' : `🔒 ${badge.condition}`}
+              </p>
+            </div>
+
+            <div class="w-full">
+              ${isEarned
+                ? (!isClaimed
+                    ? `<button onclick="claimBadgeCoinReward('${badge.id}')" class="btn-game btn-yellow w-full py-1.5 px-3 rounded-xl text-xs md:text-sm animate-pulse">
+                        🎁 Nhận +${reward} Xu
+                      </button>`
+                    : `<span class="inline-block w-full py-1.5 px-2 rounded-xl bg-emerald-100 text-emerald-700 font-bold text-xs border border-emerald-200">
+                        ✓ Đã nhận +${reward} Xu
+                      </span>`)
+                : `<span class="inline-block w-full py-1.5 px-2 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs">
+                    Thưởng +${reward} Xu khi mở
+                  </span>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeBadgesModal() {
+      playSound('click');
+      const modal = document.getElementById('badges-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openResetModal() {
+      playSound('click');
+      const modal = document.getElementById('reset-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeResetModal() {
+      playSound('click');
+      const modal = document.getElementById('reset-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function confirmResetProgress() {
+      const keepSound = gameState.soundEnabled;
+      const keepBgm = gameState.bgmEnabled;
+      gameState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      gameState.soundEnabled = keepSound;
+      gameState.bgmEnabled = keepBgm;
+      saveGameState();
+      closeResetModal();
+      playSound('click');
+      currentScreen = 'welcome';
+      renderApp();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderApp();
+      if (gameState.bgmEnabled) {
+        document.body.addEventListener('click', () => {
+          if (gameState.bgmEnabled && !bgmIntervalId) startBgmLoop();
+        }, { once: true });
+      }
+    });
+  </script>
+</body>
+</html>
